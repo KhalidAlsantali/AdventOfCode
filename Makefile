@@ -1,5 +1,3 @@
-# Makefile for Advent of Code C++ Solutions
-
 # Compiler
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2
@@ -18,15 +16,13 @@ all: $(EXES)
 
 # Generic rule for compiling .cpp to .exe
 %.exe: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	$(CXX) $(CXXFLAGS) -o $@ $
 
 # Clean up executable files
 clean:
-	find . -name "*.exe" -type f -delete
+	del /S /Q *.exe
 
 # List all targets
 list:
-	@echo "Available executables:"
-	@for exe in $(EXES); do echo "  $$exe"; done
-
-.PHONY: all clean list
+	@echo Available executables:
+	@for %%i in ($(EXES)) do @echo   %%i
