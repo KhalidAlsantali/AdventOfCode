@@ -9,7 +9,6 @@ using namespace std;
 int main(){
     vector<vector<string>> string_data;
     vector<vector<int>> data;
-    int i = 0;
     string filename = "input.txt";
     ifstream inputFile(filename);
 
@@ -63,7 +62,7 @@ int main(){
     int sum = 0;
     int adjusted_sum = 0;
     regex num_pattern("(\\d{1,3}),(\\d{1,3})");
-    for(int i = 0; i < part1_matches.size(); i++){
+    for(size_t i = 0; i < part1_matches.size(); i++){
         auto matches_begin = sregex_iterator(part1_matches[i].begin(), part1_matches[i].end(), num_pattern);
         auto matches_end = sregex_iterator();
         for(sregex_iterator j = matches_begin; j != matches_end; ++j){
@@ -72,7 +71,7 @@ int main(){
         }
     }
 
-    for(int i = 0; i < part2_matches.size(); i++){
+    for(size_t i = 0; i < part2_matches.size(); i++){
         auto matches_begin = sregex_iterator(part2_matches[i].begin(), part2_matches[i].end(), num_pattern);
         auto matches_end = sregex_iterator();
         for(sregex_iterator j = matches_begin; j != matches_end; ++j){

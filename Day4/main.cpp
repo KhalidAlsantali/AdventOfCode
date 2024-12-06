@@ -8,7 +8,7 @@ using namespace std;
 int sum = 0;
 int mas_sum = 0;
 
-bool checkDiagLeft(int i, int j, vector<vector<char>> data){
+bool checkDiagLeft(size_t i, size_t j, vector<vector<char>> data){
     if (i >= 3 && j >= 3 && 
         data[i-1][j-1] == 'M' && data[i-2][j-2] == 'A' && data[i-3][j-3] == 'S'){
         sum++;
@@ -17,7 +17,7 @@ bool checkDiagLeft(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkDiagRight(int i, int j, vector<vector<char>> data){
+bool checkDiagRight(size_t i, size_t j, vector<vector<char>> data){
     if (i >= 3 && j < data[i].size() - 3 && 
         data[i-1][j+1] == 'M' && data[i-2][j+2] == 'A' && data[i-3][j+3] == 'S'){
         sum++;
@@ -26,7 +26,7 @@ bool checkDiagRight(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkUp(int i, int j, vector<vector<char>> data){
+bool checkUp(size_t i, size_t j, vector<vector<char>> data){
     if (i >= 3 && 
         data[i-1][j] == 'M' && data[i-2][j] == 'A' && data[i-3][j] == 'S'){
         sum++;
@@ -35,7 +35,7 @@ bool checkUp(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkDown(int i, int j, vector<vector<char>> data){
+bool checkDown(size_t i, size_t j, vector<vector<char>> data){
     if (i < data.size() - 3 && 
         data[i+1][j] == 'M' && data[i+2][j] == 'A' && data[i+3][j] == 'S'){
         sum++;
@@ -44,7 +44,7 @@ bool checkDown(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkLeft(int i, int j, vector<vector<char>> data){
+bool checkLeft(size_t i, size_t j, vector<vector<char>> data){
     if (j >= 3 && 
         data[i][j-1] == 'M' && data[i][j-2] == 'A' && data[i][j-3] == 'S'){
         sum++;
@@ -53,7 +53,7 @@ bool checkLeft(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkRight(int i, int j, vector<vector<char>> data){
+bool checkRight(size_t i, size_t j, vector<vector<char>> data){
     if (j < data[i].size() - 3 && 
         data[i][j+1] == 'M' && data[i][j+2] == 'A' && data[i][j+3] == 'S'){
         sum++;
@@ -62,7 +62,7 @@ bool checkRight(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkBackDiagLeft(int i, int j, vector<vector<char>> data){
+bool checkBackDiagLeft(size_t i, size_t j, vector<vector<char>> data){
     if (i < data.size() - 3 && j >= 3 && 
         data[i+1][j-1] == 'M' && data[i+2][j-2] == 'A' && data[i+3][j-3] == 'S'){
         sum++;
@@ -71,7 +71,7 @@ bool checkBackDiagLeft(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-bool checkBackDiagRight(int i, int j, vector<vector<char>> data){
+bool checkBackDiagRight(size_t i, size_t j, vector<vector<char>> data){
     if (i < data.size() - 3 && j < data[i].size() - 3 && 
         data[i+1][j+1] == 'M' && data[i+2][j+2] == 'A' && data[i+3][j+3] == 'S'){
         sum++;
@@ -80,7 +80,7 @@ bool checkBackDiagRight(int i, int j, vector<vector<char>> data){
     return false;
 }
 
-void checkMas(int i, int j, vector<vector<char>> data) {
+void checkMas(size_t i, size_t j, vector<vector<char>> data) {
    if (i > 0 && i < data.size() - 1 && j > 0 && j < data[i].size() - 1) {
        if (data[i-1][j-1] == 'M' && data[i+1][j+1] == 'S') {
            if (data[i-1][j+1] == 'M' && data[i+1][j-1] == 'S') {
@@ -101,7 +101,7 @@ void checkMas(int i, int j, vector<vector<char>> data) {
    }
 }
 
-void checkAllDirections(int i, int j, vector<vector<char>> data) {
+void checkAllDirections(size_t i, size_t j, vector<vector<char>> data) {
   checkUp(i, j, data);
   checkDown(i, j, data);
   checkLeft(i, j, data);
@@ -121,14 +121,12 @@ int main(){
         cerr << "Error: Couldn't open file" << filename << endl;
     }
     string line;
-    int i = 0;
-    int j = 0;
     while (getline(inputFile, line)) {
         vector<char> row(line.begin(), line.end());
         data.push_back(row);
     }
-    for (int i = 0; i < data.size(); i++) {
-        for (int j = 0; j < data[i].size(); j++) {
+    for (size_t i = 0; i < data.size(); i++) {
+        for (size_t j = 0; j < data[i].size(); j++) {
             if(data[i][j] == 'X'){
                 checkAllDirections(i, j, data);
                 // cout << sum << endl;

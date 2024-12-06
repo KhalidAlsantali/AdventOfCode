@@ -32,7 +32,7 @@ int main(){
         }
         string_data[i].push_back(acc);
         acc = "";
-        for(int j = 0; j < string_data[i].size(); j++){
+        for(size_t j = 0; j < string_data[i].size(); j++){
             data[i].push_back(stoi(string_data[i][j]));
             // cout << data[i][j] << endl;
         }
@@ -40,10 +40,10 @@ int main(){
     }
     int safe_count = 0;
     int safe_count_original = 0;
-    for (int j = 0; j < data.size(); j++) {
+    for (size_t j = 0; j < data.size(); j++) {
         bool safe = true;
         bool increases = data[j][1] - data[j][0] > 0;
-        for (int k = 1; k < data[j].size(); k++) {
+        for (size_t k = 1; k < data[j].size(); k++) {
             int compare = data[j][k] - data[j][k - 1];
             if (increases) {
                 if (compare > 3 || compare < 1) {
@@ -64,13 +64,13 @@ int main(){
             safe_count_original++;
         }
     }
-    for (int j = 0; j < data.size(); j++) {
+    for (size_t j = 0; j < data.size(); j++) {
         vector<int> levels = data[j]; 
         bool safe = true;
         bool isIncreasing = levels[1] > levels[0]; 
 
    
-        for (int k = 1; k < levels.size(); k++) {
+        for (size_t k = 1; k < levels.size(); k++) {
             int diff = levels[k] - levels[k - 1];
             if (isIncreasing) {
                 if (diff > 3 || diff < 1) {
@@ -91,9 +91,9 @@ int main(){
         if (!safe) {
           
             bool fixed = false;
-            for (int x = 0; x < levels.size(); x++) {
+            for (size_t x = 0; x < levels.size(); x++) {
                 vector<int> newLevels;
-                for (int y = 0; y < levels.size(); y++) {
+                for (size_t y = 0; y < levels.size(); y++) {
                     if (y != x) {
                         newLevels.push_back(levels[y]);
                     }
@@ -103,7 +103,7 @@ int main(){
                 bool isSafe = true;
                 bool newIsIncreasing = newLevels[1] > newLevels[0];  
 
-                for (int k = 1; k < newLevels.size(); k++) {
+                for (size_t k = 1; k < newLevels.size(); k++) {
                     int diff = newLevels[k] - newLevels[k - 1];
                     if (newIsIncreasing) {
                         if (diff > 3 || diff < 1) {

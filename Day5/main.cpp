@@ -63,12 +63,12 @@ int main(){
     int broken_sum = 0;
     bool rule_broken = false;
     bool rules_changed = false;
-    for(int i = 0; i < updates.size(); ++i){
+    for(size_t i = 0; i < updates.size(); ++i){
         rule_broken = false;
         vector<int> update = updates[i];
         do {
             rules_changed = false;
-            for(int j = 0; j < rules.size(); ++j){
+            for(size_t j = 0; j < rules.size(); ++j){
                 auto it_1 = find(update.begin(), update.end(), rules[j].first);
                 auto it_2 = find(update.begin(), update.end(), rules[j].second);
 
