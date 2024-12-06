@@ -10,7 +10,6 @@ using namespace std;
 int main(){
     vector<string> list1;
     vector<string> list2;
-    int index = 0;
     string filename = "input.txt";
     ifstream inputFile(filename);
 
@@ -47,13 +46,13 @@ int main(){
     int total_dist = 0;
     int total_sim = 0;
 
-    for(int i = 0; i < list1.size(); i++){
+    for(size_t i = 0; i < list1.size(); i++){
         total_dist += abs(stoi(list1[i]) - stoi(list2[i]));
     }
 
-    for(int i = 0; i < list1.size(); i++){
+    for(size_t i = 0; i < list1.size(); i++){
         int occurances = 0;
-        for(int j = 0; j < list2.size(); j++){
+        for(size_t j = 0; j < list2.size(); j++){
             if(list1[i] == list2[j]){
                 occurances++;
             }
