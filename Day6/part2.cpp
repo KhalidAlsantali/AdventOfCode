@@ -65,7 +65,7 @@ int main(){
     };
     
     Direction guard_facing = UP;
-    int guard_i, guard_j;
+    int guard_i = 0, guard_j = 0;
     bool guard_found = false;
 
     for(size_t i = 0; i < map.size(); ++i){
@@ -121,10 +121,10 @@ int main(){
             
             visited_states.insert(current_state);
 
-            size_t next_i = current_guard_i + directionVector[current_guard_facing][0];
-            size_t next_j = current_guard_j + directionVector[current_guard_facing][1];
+            int next_i = current_guard_i + directionVector[current_guard_facing][0];
+            int next_j = current_guard_j + directionVector[current_guard_facing][1];
 
-            if (next_i < 0 || next_j < 0 || next_i >= copy_map.size() || next_j >= copy_map[0].size()) {
+            if (next_i < 0 || next_j < 0 || static_cast<size_t>(next_i) >= copy_map.size() || static_cast<size_t>(next_j) >= copy_map[0].size()) {
                 break;
             }
 
