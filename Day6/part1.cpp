@@ -51,11 +51,11 @@ int main(){
     };
     
     Direction guard_facing = UP;
-    int guard_i, guard_j;
+    int guard_i = 0, guard_j = 0;
     bool guard_found = false;
 
-    for(int i = 0; i < map.size(); ++i){
-        for(int j = 0; j < map[i].size(); ++j){
+    for(size_t i = 0; i < map.size(); ++i){
+        for(size_t j = 0; j < map[i].size(); ++j){
             auto guard_location = find(map[i].begin(), map[i].end(), '^');
             if(guard_location != map[i].end()){
                 guard_i = i;
@@ -72,12 +72,14 @@ int main(){
     while(true){
         map[guard_i][guard_j] = 'X';
 
-        int next_i = guard_i + directionVector[guard_facing][0];
-        int next_j = guard_j + directionVector[guard_facing][1];
+        int next_i = static_cast<int>(guard_i) + directionVector[guard_facing][0];
+        int next_j = static_cast<int>(guard_j) + directionVector[guard_facing][1];
 
-        cout << next_i << ", " << next_j << endl; 
+        // cout << next_i << ", " << next_j << endl; 
 
-        if (next_i < 0 || next_j < 0 || next_i >= map.size() || next_j >= map[0].size()) {
+        if (next_i < 0 || next_j < 0 || 
+            next_i >= static_cast<int>(map.size()) || 
+            next_j >= static_cast<int>(map[0].size())) {
             break;
         }
 
@@ -99,8 +101,18 @@ int main(){
     }
 
     int x_count = 0;
-    for (int i = 0; i < map.size(); ++i) {
+    for (size_t i = 0; i < map.size(); ++i) {
         x_count += count(map[i].begin(), map[i].end(), 'X');
+    }
+
+    ofstream outFile("x_coordinates.txt");
+    
+    for (size_t i = 0; i < map.size(); ++i) {
+        for (size_t j = 0; j < map[i].size(); ++j) {
+            if (map[i][j] == 'X') {
+                outFile << i << "," << j << std::endl;
+            }
+        }
     }
 
     // Debug: Print final state of the map

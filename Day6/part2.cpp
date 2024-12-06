@@ -12,15 +12,28 @@
 using namespace std;
 
 int main(){
-    string filename = "input.txt";
-    ifstream inputFile(filename);
+    string input_filename = "input.txt";
+    ifstream inputFile(input_filename);
     vector<vector<char>> map;
+    string xcoords_filename = "x_coordinates.txt";
+    vector<pair<int, int>> coordinates;
+    ifstream inFile(xcoords_filename);
+    string line;
+    
+    while (getline(inFile, line)) {
+        stringstream ss(line);
+        int i, j;
+        char comma;
+        
+        if (ss >> i >> comma >> j) {
+            coordinates.push_back({i, j});
+        }
+    }
 
     if(!inputFile.is_open()){
-        cerr << "Error: Couldn't open file" << filename << endl;
+        cerr << "Error: Couldn't open file" << xcoords_filename << endl;
         return 1;
     }
-    string line;
 
     while (getline(inputFile, line)) {
         vector<char> row;
@@ -55,8 +68,8 @@ int main(){
     int guard_i, guard_j;
     bool guard_found = false;
 
-    for(int i = 0; i < map.size(); ++i){
-        for(int j = 0; j < map[i].size(); ++j){
+    for(size_t i = 0; i < map.size(); ++i){
+        for(size_t j = 0; j < map[i].size(); ++j){
             auto guard_location = find(map[i].begin(), map[i].end(), '^');
             if(guard_location != map[i].end()){
                 guard_i = i;
@@ -74,7 +87,6 @@ int main(){
         int x, y;
         char direction;
         
-        // Need to define comparison operators for set to work
         bool operator<(const State& other) const {
             return std::tie(x, y, direction) < std::tie(other.x, other.y, other.direction);
         }
@@ -82,54 +94,52 @@ int main(){
 
     set<State> visited_states;
     int loop_count = 0;
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[i].size(); j++){
-            if(map[i][j] == '#' || (i == guard_i && j == guard_j)){
-                continue;
+    for(size_t k = 0; k < coordinates.size(); k++){
+        int i = coordinates[k].first;
+        int j = coordinates[k].second;
+        if(map[i][j] == '#' || (i == guard_i && j == guard_j)){
+            continue;
+        }
+
+        vector<vector<char>> copy_map = map;
+        copy_map[i][j] = '#';
+
+        int current_guard_i = guard_i;
+        int current_guard_j = guard_j;
+        Direction current_guard_facing = guard_facing;
+
+        visited_states.clear();
+
+        bool is_loop = false;
+        while(true){
+            State current_state{current_guard_i, current_guard_j, current_guard_facing};
+            
+            if(visited_states.count(current_state) > 0){
+                is_loop = true;
+                break;
+            }
+            
+            visited_states.insert(current_state);
+
+            size_t next_i = current_guard_i + directionVector[current_guard_facing][0];
+            size_t next_j = current_guard_j + directionVector[current_guard_facing][1];
+
+            if (next_i < 0 || next_j < 0 || next_i >= copy_map.size() || next_j >= copy_map[0].size()) {
+                break;
             }
 
-            vector<vector<char>> copy_map = map;
-            copy_map[i][j] = '#';
-
-            int current_guard_i = guard_i;
-            int current_guard_j = guard_j;
-            Direction current_guard_facing = guard_facing;
-
-            visited_states.clear();
-
-            bool is_loop = false;
-            while(true){
-                State current_state{current_guard_i, current_guard_j, current_guard_facing};
-                
-                if(visited_states.count(current_state) > 0){
-                    is_loop = true;
-                    break;
-                }
-                
-                visited_states.insert(current_state);
-
-                int next_i = current_guard_i + directionVector[current_guard_facing][0];
-                int next_j = current_guard_j + directionVector[current_guard_facing][1];
-
-                if (next_i < 0 || next_j < 0 || next_i >= copy_map.size() || next_j >= copy_map[0].size()) {
-                    break;
-                }
-
-                if(copy_map[next_i][next_j] == '#'){
-                    current_guard_facing = static_cast<Direction>((current_guard_facing + 1) % 4);
-                } else {
-                    current_guard_i = next_i;
-                    current_guard_j = next_j;
-                }
+            if(copy_map[next_i][next_j] == '#'){
+                current_guard_facing = static_cast<Direction>((current_guard_facing + 1) % 4);
+            } else {
+                current_guard_i = next_i;
+                current_guard_j = next_j;
             }
+        }
 
-            if(is_loop){
-                loop_count++;
-            }
-            cout << i << " " << j << endl;
+        if(is_loop){
+            loop_count++;
         }
     }
-
     // Debug: Print final state of the map
     // cout << "Final map:" << endl;
     // for (const auto& row : map) {
