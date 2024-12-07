@@ -13,16 +13,27 @@
 
 using namespace std;
 
-bool isPossible(vector<int64_t> values, int64_t target, int64_t prev = 0, int index = 0){
+bool isPossiblePart1(vector<int64_t> values, int64_t target, int64_t prev = 0, int index = 0){
     if (index >= values.size()) {
         return prev == target;
     }
     if (prev > target) {
         return false;
     }
-    return isPossible(values, target, prev + values[index], index + 1) ||
-           isPossible(values, target, prev * values[index], index + 1) ||
-           isPossible(values, target, stoll(to_string(prev) + to_string(values[index])), index + 1);
+    return isPossiblePart1(values, target, prev + values[index], index + 1) ||
+           isPossiblePart1(values, target, prev * values[index], index + 1);
+}
+
+bool isPossiblePart2(vector<int64_t> values, int64_t target, int64_t prev = 0, int index = 0){
+    if (index >= values.size()) {
+        return prev == target;
+    }
+    if (prev > target) {
+        return false;
+    }
+    return isPossiblePart2(values, target, prev + values[index], index + 1) ||
+           isPossiblePart2(values, target, prev * values[index], index + 1) ||
+           isPossiblePart2(values, target, stoll(to_string(prev) + to_string(values[index])), index + 1);
 }
 
 int main(){
@@ -51,11 +62,17 @@ int main(){
     }
     inputFile.close();
 
-    int64_t total = 0;
+    int64_t total_1 = 0, total_2 = 0;
     for(const auto& [result, values] : equations){
-        if(isPossible(values, result)){
-            total += result;
+        if(isPossiblePart1(values, result)){
+            total_1 += result;
         }
     }
-    cout << total << endl;
+    for(const auto& [result, values] : equations){
+        if(isPossiblePart2(values, result)){
+            total_2 += result;
+        }
+    }
+    cout << "Part one answer: " << total_1 << endl;
+    cout << "Part two answer: " << total_2 << endl;
 }

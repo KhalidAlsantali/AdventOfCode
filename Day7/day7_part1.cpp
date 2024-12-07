@@ -83,5 +83,5 @@ int main(){
             }
         }
     }
-    cout << total << endl;
+    cout << "Part one answer: " << total << endl;
 }
