@@ -4,8 +4,6 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
-#include <thread>  // For std::this_thread::sleep_for
-#include <chrono>  // For std::chrono::milliseconds
 
 
 using namespace std;
@@ -29,12 +27,6 @@ int main(){
         map.push_back(row);
     }
     inputFile.close();
-    // for (const auto& line : map) {
-    //     for (char c : line) {
-    //         std::cout << c << " ";
-    //     }
-    //     std::cout << std::endl;
-    // }
 
     enum Direction {
         UP,
@@ -75,8 +67,6 @@ int main(){
         int next_i = static_cast<int>(guard_i) + directionVector[guard_facing][0];
         int next_j = static_cast<int>(guard_j) + directionVector[guard_facing][1];
 
-        // cout << next_i << ", " << next_j << endl; 
-
         if (next_i < 0 || next_j < 0 || 
             next_i >= static_cast<int>(map.size()) || 
             next_j >= static_cast<int>(map[0].size())) {
@@ -89,15 +79,6 @@ int main(){
             guard_i += directionVector[guard_facing][0];
             guard_j += directionVector[guard_facing][1];
         }
-
-        // std::this_thread::sleep_for(std::chrono::seconds(1));
-        // for (const auto& line : map) {
-        //     for (char c : line) {
-        //         std::cout << c << " ";
-        //     }
-        //     std::cout << std::endl;
-        // }
-        // cout << endl << endl << endl << endl;
     }
 
     int x_count = 0;
@@ -114,15 +95,6 @@ int main(){
             }
         }
     }
-
-    // Debug: Print final state of the map
-    // cout << "Final map:" << endl;
-    // for (const auto& row : map) {
-    //     for (char c : row) {
-    //         cout << c;
-    //     }
-    //     cout << endl;
-    // }
 
     cout << "Part one answer: " << x_count << endl;
     return 0;

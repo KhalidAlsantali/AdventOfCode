@@ -28,7 +28,6 @@ int main(){
     bool p1enabled = true;
     for(sregex_iterator i = p1words_begin; i != p1words_end; ++i){
         smatch match = *i;
-        // cout << match.str() << endl;
         if(match.str() == "do()"){
             p1enabled = true;
         }
@@ -47,7 +46,6 @@ int main(){
     bool enabled = true;
     for(sregex_iterator i = words_begin; i != words_end; ++i){
         smatch match = *i;
-        // cout << match.str() << endl;
         if(match.str() == "do()"){
             enabled = true;
         }
@@ -82,6 +80,5 @@ int main(){
     
     cout << "Part one answer: " << sum << endl;
     cout << "Part two answer: " << adjusted_sum << endl;
-
-
+    return 0;
 }

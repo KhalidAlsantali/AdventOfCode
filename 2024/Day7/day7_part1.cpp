@@ -84,4 +84,5 @@ int main(){
         }
     }
     cout << "Part one answer: " << total << endl;
+    return 0;
 }

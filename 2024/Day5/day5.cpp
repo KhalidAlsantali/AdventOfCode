@@ -48,17 +48,6 @@ int main(){
     }
     updates_file.close();
 
-    // for (const auto& p : rules) {
-    //     std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
-    // }
-
-    // for (const auto& line : updates) {
-    //     for (int num : line) {
-    //         std::cout << num << " ";
-    //     }
-    //     std::cout << std::endl;
-    // }
-
     int sum = 0;
     int broken_sum = 0;
     bool rule_broken = false;
@@ -72,10 +61,10 @@ int main(){
                 auto it_1 = find(update.begin(), update.end(), rules[j].first);
                 auto it_2 = find(update.begin(), update.end(), rules[j].second);
 
-                if(it_1 != update.end() && it_2 != update.end()){ // check if both nums of a rule exist
-                    if(distance(update.begin(), it_1) < distance(update.begin(), it_2)){ //check if the first num is before the second num
+                if(it_1 != update.end() && it_2 != update.end()){ 
+                    if(distance(update.begin(), it_1) < distance(update.begin(), it_2)){
                         //do nothing
-                    } else { //rule broken
+                    } else {
                         rule_broken = true;
                         rules_changed = true;
                         int temp;
@@ -93,6 +82,8 @@ int main(){
             sum += update[update.size() / 2];
         }
     }
+    
     cout << "Part one answer: " << sum << endl;
     cout << "Part two answer: " << broken_sum << endl;
+    return 0;
 }

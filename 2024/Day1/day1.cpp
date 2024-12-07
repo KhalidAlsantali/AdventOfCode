@@ -18,6 +18,7 @@ int main(){
     }
 
     string line;
+    
     // stringstream implementation
     // while(getline(inputFile, line)){
     //     istringstream ss(line);
@@ -32,12 +33,11 @@ int main(){
     //     }
     // }
 
-    // more manual parsing implementation
+    // manual parsing implementation
     while(getline(inputFile, line)){
         size_t firstSpacePos = line.find(' ');
         list1.push_back(line.substr(0, firstSpacePos));
         list2.push_back(line.substr(firstSpacePos + 3, line.size()));
-        // cout << line.substr(firstSpacePos + 3, line.size()) << endl;
     }
 
     sort(list1.begin(), list1.end());

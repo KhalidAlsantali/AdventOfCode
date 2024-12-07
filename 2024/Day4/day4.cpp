@@ -129,9 +129,6 @@ int main(){
         for (size_t j = 0; j < data[i].size(); j++) {
             if(data[i][j] == 'X'){
                 checkAllDirections(i, j, data);
-                // cout << sum << endl;
-                // cout << "X at " << i << ", " << j << endl;
-                // sum++;
             }
             if(data[i][j] == 'A'){
                 checkMas(i, j, data);
@@ -140,4 +137,5 @@ int main(){
     }
     cout << "Part one answer: " << sum << endl;
     cout << "Part two answer: " << mas_sum << endl;
+    return 0;
 }

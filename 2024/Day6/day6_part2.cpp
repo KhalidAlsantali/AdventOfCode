@@ -4,9 +4,8 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
-#include <thread>  // For std::this_thread::sleep_for
-#include <chrono>  // For std::chrono::milliseconds
 #include <set>
+#include <tuple>
 
 
 using namespace std;
@@ -43,12 +42,6 @@ int main(){
         map.push_back(row);
     }
     inputFile.close();
-    // for (const auto& line : map) {
-    //     for (char c : line) {
-    //         std::cout << c << " ";
-    //     }
-    //     std::cout << std::endl;
-    // }
 
     enum Direction {
         UP,
@@ -86,7 +79,7 @@ int main(){
     struct State {
         int x, y;
         char direction;
-        
+        // This overloads the < operator so I can use the set data structure. Not my code.
         bool operator<(const State& other) const {
             return std::tie(x, y, direction) < std::tie(other.x, other.y, other.direction);
         }
@@ -140,14 +133,6 @@ int main(){
             loop_count++;
         }
     }
-    // Debug: Print final state of the map
-    // cout << "Final map:" << endl;
-    // for (const auto& row : map) {
-    //     for (char c : row) {
-    //         cout << c;
-    //     }
-    //     cout << endl;
-    // }
 
     cout << "Part two answer: " << loop_count << endl;
     return 0;

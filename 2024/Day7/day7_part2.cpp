@@ -101,4 +101,5 @@ int main(){
         }
     }
     cout << "Part two answer: " << total << endl;
+    return 0;
 }

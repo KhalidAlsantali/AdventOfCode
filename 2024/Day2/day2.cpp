@@ -20,11 +20,9 @@ int main(){
     while(getline(inputFile, line)){
         string_data.emplace_back();
         data.emplace_back();
-        // cout << line << endl;
         for(char c : line){
             if(c == ' '){
                 string_data[i].push_back(acc);
-                // cout << acc << endl;
                 acc = "";
             } else {
                 acc += c;
@@ -34,7 +32,6 @@ int main(){
         acc = "";
         for(size_t j = 0; j < string_data[i].size(); j++){
             data[i].push_back(stoi(string_data[i][j]));
-            // cout << data[i][j] << endl;
         }
         i++;
     }
@@ -47,20 +44,17 @@ int main(){
             int compare = data[j][k] - data[j][k - 1];
             if (increases) {
                 if (compare > 3 || compare < 1) {
-                    // cout << "UNSAFE" << endl;
                     safe = false;
                     break; 
                 }
             } else {
                 if (compare < -3 || compare > -1) {
-                    // cout << "UNSAFE" << endl;
                     safe = false;
                     break;
                 }
             }
         }
         if(safe){
-            // cout << "SAFE" << endl;
             safe_count_original++;
         }
     }
@@ -74,13 +68,11 @@ int main(){
             int diff = levels[k] - levels[k - 1];
             if (isIncreasing) {
                 if (diff > 3 || diff < 1) {
-                    // cout << "UNSAFE" << endl;
                     safe = false;
                     break;
                 }
             } else {
                 if (diff < -3 || diff > -1) {
-                    // cout << "UNSAFE" << endl;
                     safe = false;
                     break;
                 }
@@ -117,35 +109,20 @@ int main(){
                         }
                     }
                 }
-
                 if (isSafe) {
                     fixed = true;
                     break;  
                 }
             }
-
-            
             if (fixed) {
                 safe_count++;
-                // cout << "SAFE" << endl;
             }
         } else {
-            
             safe_count++;
-            // cout << "SAFE" << endl;
         }
     }
 
     cout << "Part one answer: " << safe_count_original << endl;
     cout << "Part two answer: " << safe_count << endl;
-
-    // Loop to print the 2D vector
-    // for (size_t i = 0; i < data.size(); i++) {       
-    //     for (size_t j = 0; j < data[i].size(); j++) {
-    //         cout << data[i][j] << " ";              
-    //     }
-    //     cout << endl;                              
-    // }
-
-
+    return 0;
 }

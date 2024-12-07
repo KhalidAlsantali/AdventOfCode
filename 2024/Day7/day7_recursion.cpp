@@ -75,4 +75,5 @@ int main(){
     }
     cout << "Part one answer: " << total_1 << endl;
     cout << "Part two answer: " << total_2 << endl;
+    return 0;
 }
