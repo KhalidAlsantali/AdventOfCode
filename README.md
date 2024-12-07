@@ -1,5 +1,6 @@
-# Advent of Code 2024
+# Advent of Code
 
-This is a repository of my solutions to the 2024 Advent of Code event in C++. 
+This is a repository of my solutions to the Advent of Code event. An annual event of 25 daily themed programming puzzles.
 
-**Makefile list and clean were made for a windows environment.**
+# Notes about the code
+* 2024 solutions are written in C++ and the makefile list and clean commands assume a windows environment.
