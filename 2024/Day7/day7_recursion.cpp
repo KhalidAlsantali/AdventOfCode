@@ -13,7 +13,7 @@
 
 using namespace std;
 
-bool isPossiblePart1(vector<int64_t> values, int64_t target, int64_t prev = 0, int index = 0){
+bool isPossiblePart1(vector<int64_t> values, int64_t target, int64_t prev = 0, size_t index = 0){
     if (index >= values.size()) {
         return prev == target;
     }
@@ -24,7 +24,7 @@ bool isPossiblePart1(vector<int64_t> values, int64_t target, int64_t prev = 0, i
            isPossiblePart1(values, target, prev * values[index], index + 1);
 }
 
-bool isPossiblePart2(vector<int64_t> values, int64_t target, int64_t prev = 0, int index = 0){
+bool isPossiblePart2(vector<int64_t> values, int64_t target, int64_t prev = 0, size_t index = 0){
     if (index >= values.size()) {
         return prev == target;
     }
