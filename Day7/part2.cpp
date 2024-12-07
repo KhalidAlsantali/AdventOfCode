@@ -47,7 +47,7 @@ int64_t calculateResult(vector<int64_t> values, string operator_comb){
         result = stoll(to_string(values[0]) + to_string(values[1]));
     }
 
-    for(int i = 1; i < operator_comb.length(); ++i){
+    for(size_t i = 1; i < operator_comb.length(); ++i){
         if(operator_comb[i] == '+'){
             result = result + values[i+1];
         } else if (operator_comb[i] == '*'){

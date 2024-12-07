@@ -34,7 +34,7 @@ vector<string> generateCombinations(int length) {
 int64_t calculateResult(vector<int64_t> values, string operator_comb){
     int64_t result = 0;
     result = operator_comb[0] == '+' ? values[0] + values[1] : values[0] * values[1];
-    for(int i = 1; i < operator_comb.length(); ++i){
+    for(size_t i = 1; i < operator_comb.length(); ++i){
         result = operator_comb[i] == '+' ? result + values[i+1] : result * values[i+1];
     }
     return result;
