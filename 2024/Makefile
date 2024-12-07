@@ -1,5 +1,3 @@
-# Makefile for Advent of Code C++ Solutions
-
 # Compiler
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2
@@ -7,11 +5,11 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -O2
 # Find all day directories
 DAYS := $(wildcard day*)
 
-# Generate executable targets
-EXES := $(foreach day,$(DAYS),\
-    $(if $(wildcard $(day)/part1.cpp),$(day)/part1.exe)\
-    $(if $(wildcard $(day)/part2.cpp),$(day)/part2.exe)\
-    $(if $(wildcard $(day)/main.cpp),$(day)/main.exe))
+# Find all .cpp files in day directories
+CPP_FILES := $(wildcard $(DAYS:=/*.cpp))
+
+# Generate executable targets for all .cpp files
+EXES := $(CPP_FILES:.cpp=.exe)
 
 # Default target
 all: $(EXES)
