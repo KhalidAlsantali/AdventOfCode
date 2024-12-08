@@ -24,13 +24,12 @@ pair<int, int> calculateDifference(pair<int, int> first_antenna, pair<int, int> 
 
 vector<pair<int, int>> getAntinodes(pair<int, int> first_antenna, pair<int, int> second_antenna, pair<int, int> diff, vector<vector<char>>& map) {
     vector<pair<int, int>> antinodes;
-    pair<int, int> points[4] = {first_antenna, second_antenna, first_antenna, second_antenna};
+    pair<int, int> points[3] = {first_antenna, second_antenna, first_antenna};
     
     while(true){
         points[0] = {(diff.first * -1) + points[0].first, (diff.second * -1) + points[0].second};
         points[1] = {diff.first + points[1].first, diff.second + points[1].second};
         points[2] = {diff.first + points[2].first, diff.second + points[2].second};
-        points[3] = {(diff.first * -1) + points[3].first, (diff.second * -1) + points[3].second};
         
         bool allOutOfBounds = true;
         for(const auto& point : points){
