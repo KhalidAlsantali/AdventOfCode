@@ -52,4 +52,5 @@ int main(){
         checksum_total += stoi(layout[i]) * i;
     }
     cout << "Part one answer: " << checksum_total << endl;
+    return 0;
 }
