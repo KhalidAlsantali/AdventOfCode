@@ -12,7 +12,7 @@ using namespace std;
 
 int getEmptySize(const vector<string>& layout, int file_size) {
     int current_length = 0;
-    for (int i = 0; i < layout.size(); ++i) {
+    for (size_t i = 0; i < layout.size(); ++i) {
         if (layout[i] == ".") {
             current_length++;
             if (current_length == file_size) {
@@ -46,11 +46,11 @@ int main(){
                 layout.push_back(to_string(i / 2));
                 length = stoi(diskmap[i]);
                 file_sum++;
+                file_ids[i / 2] = length;
             } else {
                 layout.push_back(string(1, '.'));
             }
         }
-        file_ids[i / 2] = length;
     }
 
     for (auto it = file_ids.rbegin(); it != file_ids.rend(); ++it) {
