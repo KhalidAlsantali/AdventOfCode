@@ -32,16 +32,13 @@ vector<pair<int, int>> getStartingPoints(vector<vector<int>>& map){
     return zeros;
 }
 
-set<pair<int, int>> isClimbable(vector<vector<int>>& map, pair<int, int> startingPoint, set<pair<int, int>>& visited) {
+set<pair<int, int>> isClimbable(vector<vector<int>>& map, pair<int, int> startingPoint) {
     set<pair<int, int>> results;
 
     if (startingPoint.first < 0 || static_cast<size_t>(startingPoint.first) >= map.size() || 
-        startingPoint.second < 0 || static_cast<size_t>(startingPoint.second) >= map[0].size() || 
-        visited.count(startingPoint)) {
+        startingPoint.second < 0 || static_cast<size_t>(startingPoint.second) >= map[0].size()) {
         return results;
     }
-
-    visited.insert(startingPoint);
 
     if (map[startingPoint.first][startingPoint.second] == 9) {
         results.insert(startingPoint);
@@ -62,7 +59,7 @@ set<pair<int, int>> isClimbable(vector<vector<int>>& map, pair<int, int> startin
             newCol >= 0 && static_cast<size_t>(newCol) < map[0].size() && 
             map[newRow][newCol] == current + 1) {
 
-            auto branchResults = isClimbable(map, {newRow, newCol}, visited);
+            auto branchResults = isClimbable(map, {newRow, newCol});
             results.insert(branchResults.begin(), branchResults.end());
         }
     }
@@ -88,7 +85,7 @@ int main(){
     vector<pair<int, int>> startingPoints = getStartingPoints(map);
     for(auto start : startingPoints){
         set<pair<int, int>> visited;
-        set<pair<int, int>> results  = isClimbable(map, start, visited);
+        set<pair<int, int>> results  = isClimbable(map, start);
         for (const auto& endpoint : results) {
             trail_startends[start].insert(endpoint);
         }
