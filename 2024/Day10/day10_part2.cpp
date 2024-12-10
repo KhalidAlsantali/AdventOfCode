@@ -43,21 +43,19 @@ vector<pair<int, int>> isClimbable(vector<vector<int>>& map, pair<int, int> star
         results.push_back(startingPoint);
     }
 
-    int current = map[startingPoint.first][startingPoint.second];
-
     vector<pair<int, int>> directions = {
         {-1, 0}, {1, 0}, {0, -1}, {0, 1}
     };
 
-    for (auto& dir : directions) {
+    for (pair<int, int>& dir : directions) {
         int newRow = startingPoint.first + dir.first;
         int newCol = startingPoint.second + dir.second;
 
         if (newRow >= 0 && static_cast<size_t>(newRow) < map.size() && 
             newCol >= 0 && static_cast<size_t>(newCol) < map[0].size() && 
-            map[newRow][newCol] == current + 1) {
+            map[newRow][newCol] == map[startingPoint.first][startingPoint.second] + 1) {
 
-            auto branchResults = isClimbable(map, {newRow, newCol});
+            vector<pair<int, int>> branchResults = isClimbable(map, {newRow, newCol});
             results.insert(results.end(), branchResults.begin(), branchResults.end());
         }
     }
