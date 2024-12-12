@@ -44,8 +44,12 @@ int main(){
     vector<vector<char>> map;
     unordered_map<int, region> mapped;
     vector<pair<int, int>> dirs = {{1,0}, {-1, 0}, {0, 1}, {0, -1}};
-    vector<pair<int, int>> vert_dirs = {{1,0}, {-1, 0}};
-    vector<pair<int, int>> hor_dirs = {{0, 1}, {0, -1}};
+    const int offsets[4][3][2] = {
+        {{-1, 0}, {0, -1}, {-1, -1}},
+        {{-1, 0}, {0, 1}, {-1, 1}},
+        {{1, 0}, {0, -1}, {1, -1}},
+        {{1, 0}, {0, 1}, {1, 1}}
+    };
     
 
     string line, number;
@@ -103,45 +107,19 @@ int main(){
     int sum = 0;
     for (auto& entry : mapped) {
         for(pair<int, int> coord : entry.second.coords){
-            pair<int, int> up = make_pair(coord.first - 1, coord.second);
-            pair<int, int> down = make_pair(coord.first + 1, coord.second);
-            pair<int, int> right = make_pair(coord.first, coord.second + 1);
-            pair<int, int> left = make_pair(coord.first, coord.second - 1);
-            pair<int, int> upleft = make_pair(coord.first - 1, coord.second - 1);
-            pair<int, int> upright = make_pair(coord.first - 1, coord.second + 1);
-            pair<int, int> downleft = make_pair(coord.first + 1, coord.second - 1);
-            pair<int, int> downright = make_pair(coord.first + 1, coord.second + 1);
+            for (const auto& corner : offsets) {
+                int dx1 = corner[0][0], dy1 = corner[0][1];
+                int dx2 = corner[1][0], dy2 = corner[1][1];
+                int dx3 = corner[2][0], dy3 = corner[2][1];
 
-            if(map[coord.first][coord.second] != getPlant(map, up.first, up.second) && map[coord.first][coord.second] != getPlant(map, left.first, left.second)){
-                entry.second.corners++;
-            }
+                if (map[coord.first][coord.second] != getPlant(map, coord.first + dx1, coord.second + dy1) && 
+                    map[coord.first][coord.second] != getPlant(map, coord.first + dx2, coord.second + dy2))
+                    entry.second.corners++;
 
-            if(map[coord.first][coord.second] == getPlant(map, up.first, up.second) && map[coord.first][coord.second] == getPlant(map, left.first, left.second) && map[coord.first][coord.second] != getPlant(map, upleft.first, upleft.second)){
-                entry.second.corners++;
-            }
-
-            if (map[coord.first][coord.second] != getPlant(map, up.first, up.second) && map[coord.first][coord.second] != map[right.first][right.second]) {
-                entry.second.corners++;
-            }
-
-            if (map[coord.first][coord.second] == getPlant(map, up.first, up.second) && map[coord.first][coord.second] == map[right.first][right.second] && map[coord.first][coord.second] != getPlant(map, upright.first, upright.second)) {
-                entry.second.corners++;
-            }
-
-            if (map[coord.first][coord.second] != getPlant(map, down.first, down.second) && map[coord.first][coord.second] != getPlant(map, left.first, left.second)) {
-                entry.second.corners++;
-            }
-
-            if (map[coord.first][coord.second] == getPlant(map, down.first, down.second) && map[coord.first][coord.second] == getPlant(map, left.first, left.second) && map[coord.first][coord.second] != getPlant(map, downleft.first, downleft.second)) {
-                entry.second.corners++;
-            }
-
-            if (map[coord.first][coord.second] != getPlant(map, down.first, down.second) && map[coord.first][coord.second] != map[right.first][right.second]) {
-                entry.second.corners++;
-            }
-
-            if (map[coord.first][coord.second] == getPlant(map, down.first, down.second) && map[coord.first][coord.second] == map[right.first][right.second] && map[coord.first][coord.second] != getPlant(map, downright.first, downright.second)) {
-                entry.second.corners++;
+                if (map[coord.first][coord.second] == getPlant(map, coord.first + dx1, coord.second + dy1) && 
+                    map[coord.first][coord.second] == getPlant(map, coord.first + dx2, coord.second + dy2) && 
+                    map[coord.first][coord.second] != getPlant(map, coord.first + dx3, coord.second + dy3))
+                    entry.second.corners++;
             }
         }
     }
