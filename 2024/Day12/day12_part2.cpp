@@ -29,25 +29,17 @@ bool visited(int i, int j, unordered_map<int, region>& map){
     return false;
 }
 
-int getRegionKeyFromCoordinate(int x, int y, unordered_map<int, region>& mapped) {
-    // Iterate through the unordered map
-    for (const auto& entry : mapped) {
-        const region& r = entry.second;
-        // Iterate through the coordinates in the region
-        for (const auto& coord : r.coords) {
-            if (coord.first == x && coord.second == y) {
-                // If the coordinate matches, return the corresponding key
-                return entry.first;
-            }
-        }
+char getPlant(vector<vector<char>>& map, int i, int j){
+    if(i >= 0 && j >= 0 && i < map.size() && j < map[0].size()){
+        return map[i][j];
     }
-    // Return -1 or another indication if the coordinate is not found
     return -1;
 }
 
 
+
 int main(){
-    string input_filename = "example.txt";
+    string input_filename = "input.txt";
     ifstream inputFile(input_filename);
     vector<vector<char>> map;
     unordered_map<int, region> mapped;
@@ -67,12 +59,6 @@ int main(){
         map.push_back(row);
     }
 
-    // for (size_t i = 0; i < map.size(); i++){
-    //     for (size_t j = 0; j < map[i].size(); j++){
-    //         cout << map[i][j];
-    //     }
-    //     cout << endl;
-    // }
     vector<vector<bool>> visited_map(map.size(), vector<bool>(map[0].size(), false));
     int region_id = 1;
     for (size_t i = 0; i < map.size(); i++){
@@ -115,52 +101,57 @@ int main(){
         }
     }
     int sum = 0;
-    for (const auto& entry : mapped) {
-        // set<pair<int, char>> edges;
-        set<tuple<int, char, int>> edges;
+    for (auto& entry : mapped) {
         for(pair<int, int> coord : entry.second.coords){
-            // i loop
-            for(auto dir : vert_dirs){
-                int ni = coord.first + dir.first;
-                int nj = coord.second + dir.second;
-                // cout << ni << ":" << nj << endl;
-                if(ni < 0 || nj < 0 || ni > map.size() - 1 || nj > map[0].size() - 1 || map[coord.first][coord.second] != map[ni][nj]){
-                    edges.insert(make_tuple(coord.first, ni - coord.first == 1 ? 'U' : 'D', getRegionKeyFromCoordinate(ni, nj, mapped)));
-                }
+            pair<int, int> up = make_pair(coord.first - 1, coord.second);
+            pair<int, int> down = make_pair(coord.first + 1, coord.second);
+            pair<int, int> right = make_pair(coord.first, coord.second + 1);
+            pair<int, int> left = make_pair(coord.first, coord.second - 1);
+            pair<int, int> upleft = make_pair(coord.first - 1, coord.second - 1);
+            pair<int, int> upright = make_pair(coord.first - 1, coord.second + 1);
+            pair<int, int> downleft = make_pair(coord.first + 1, coord.second - 1);
+            pair<int, int> downright = make_pair(coord.first + 1, coord.second + 1);
+
+            if(map[coord.first][coord.second] != getPlant(map, up.first, up.second) && map[coord.first][coord.second] != getPlant(map, left.first, left.second)){
+                entry.second.corners++;
             }
-            // j loop
-            for(auto dir : hor_dirs){
-                int ni = coord.first + dir.first;
-                int nj = coord.second + dir.second;
-                if(ni < 0 || nj < 0 || ni > map.size() - 1 || nj > map[0].size() - 1 || map[coord.first][coord.second] != map[ni][nj]){
-                    cout << coord.first << ":" << coord.second << "|||" << ni << ":" << nj << endl;
-                    edges.insert(make_tuple(coord.second, nj - coord.second == 1 ? 'L' : 'R', getRegionKeyFromCoordinate(ni, nj, mapped)));
-                }
+
+            if(map[coord.first][coord.second] == getPlant(map, up.first, up.second) && map[coord.first][coord.second] == getPlant(map, left.first, left.second) && map[coord.first][coord.second] != getPlant(map, upleft.first, upleft.second)){
+                entry.second.corners++;
+            }
+
+            if (map[coord.first][coord.second] != getPlant(map, up.first, up.second) && map[coord.first][coord.second] != map[right.first][right.second]) {
+                entry.second.corners++;
+            }
+
+            if (map[coord.first][coord.second] == getPlant(map, up.first, up.second) && map[coord.first][coord.second] == map[right.first][right.second] && map[coord.first][coord.second] != getPlant(map, upright.first, upright.second)) {
+                entry.second.corners++;
+            }
+
+            if (map[coord.first][coord.second] != getPlant(map, down.first, down.second) && map[coord.first][coord.second] != getPlant(map, left.first, left.second)) {
+                entry.second.corners++;
+            }
+
+            if (map[coord.first][coord.second] == getPlant(map, down.first, down.second) && map[coord.first][coord.second] == getPlant(map, left.first, left.second) && map[coord.first][coord.second] != getPlant(map, downleft.first, downleft.second)) {
+                entry.second.corners++;
+            }
+
+            if (map[coord.first][coord.second] != getPlant(map, down.first, down.second) && map[coord.first][coord.second] != map[right.first][right.second]) {
+                entry.second.corners++;
+            }
+
+            if (map[coord.first][coord.second] == getPlant(map, down.first, down.second) && map[coord.first][coord.second] == map[right.first][right.second] && map[coord.first][coord.second] != getPlant(map, downright.first, downright.second)) {
+                entry.second.corners++;
             }
         }
-        // for (const auto& edge : edges) {
-        //     cout << "(" << edge.first << ", " << edge.second << ")" << endl;
-        // }
-
-        cout << endl << endl << endl;
-        mapped[entry.first].corners = edges.size();
     }
 
     for (const auto& entry : mapped) {
-        cout << "Key: " << entry.first << endl;
-        cout << "Area: " << entry.second.area << endl;
-        cout << "Perimeter: " << entry.second.perimeter << endl;
-        cout << "Corners: " << entry.second.corners << endl;
-        cout << "Coordinates: ";
-        for (const auto& coord : entry.second.coords) {
-            cout << "(" << coord.first << ", " << coord.second << ") ";
-        }
-        cout << endl << endl;
         sum += entry.second.area * entry.second.corners;
     }
 
 
 
-    cout << "Part one answer: " << sum << endl;
+    cout << "Part two answer: " << sum << endl;
     
 }
