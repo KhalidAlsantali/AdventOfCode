@@ -30,7 +30,7 @@ bool visited(int i, int j, unordered_map<int, region>& map){
 }
 
 char getPlant(vector<vector<char>>& map, int i, int j){
-    if(i >= 0 && j >= 0 && i < map.size() && j < map[0].size()){
+    if(i >= 0 && j >= 0 && static_cast<size_t>(i) < map.size() && static_cast<size_t>(j) < map[0].size()){
         return map[i][j];
     }
     return -1;
@@ -82,7 +82,7 @@ int main(){
                         int ni = current.first + dir.first;
                         int nj = current.second + dir.second;
 
-                        if(ni >= 0 && nj >= 0 && ni < map.size() && nj < map[0].size()){
+                        if(ni >= 0 && nj >= 0 && static_cast<size_t>(ni) < map.size() && static_cast<size_t>(nj) < map[0].size()){
                             if(map[i][j] == map[ni][nj] && !visited_map[ni][nj]){
                                 stack.push(make_pair(ni, nj));
                                 visited_map[ni][nj] = true;
