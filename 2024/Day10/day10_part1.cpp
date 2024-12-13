@@ -94,6 +94,6 @@ int main(){
         total_trail_connections += trail_set.size();
     }
 
-    cout << "Part one answer: " << total_trail_connections;
+    cout << "Part one answer: " << total_trail_connections << endl;
     return 0;
 }
