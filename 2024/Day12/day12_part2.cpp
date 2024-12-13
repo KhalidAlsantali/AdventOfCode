@@ -36,8 +36,6 @@ char getPlant(vector<vector<char>>& map, int i, int j){
     return -1;
 }
 
-
-
 int main(){
     string input_filename = "input.txt";
     ifstream inputFile(input_filename);
@@ -127,8 +125,6 @@ int main(){
     for (const auto& entry : mapped) {
         sum += entry.second.area * entry.second.corners;
     }
-
-
 
     cout << "Part two answer: " << sum << endl;
     

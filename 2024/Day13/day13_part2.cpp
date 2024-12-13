@@ -120,6 +120,6 @@ int main() {
         sum += (x*3) + y;
     }
 
-    cout << "Part two answer: " << sum;
+    cout << "Part two answer: " << sum << endl;
     return 0;
 }

@@ -47,12 +47,6 @@ int main(){
         map.push_back(row);
     }
 
-    // for (size_t i = 0; i < map.size(); i++){
-    //     for (size_t j = 0; j < map[i].size(); j++){
-    //         cout << map[i][j];
-    //     }
-    //     cout << endl;
-    // }
     vector<vector<bool>> visited_map(map.size(), vector<bool>(map[0].size(), false));
     int region_id = 1;
     for (size_t i = 0; i < map.size(); i++){
@@ -74,7 +68,7 @@ int main(){
                         int ni = current.first + dir.first;
                         int nj = current.second + dir.second;
 
-                        if(ni >= 0 && nj >= 0 && ni < map.size() && nj < map[0].size()){
+                        if(ni >= 0 && nj >= 0 && static_cast<size_t>(ni) < map.size() && static_cast<size_t>(nj) < map[0].size()){
 
                             if(map[i][j] == map[ni][nj] && !visited_map[ni][nj]){
                                 stack.push(make_pair(ni, nj));
@@ -95,14 +89,6 @@ int main(){
     }
     int sum = 0;
     for (const auto& entry : mapped) {
-        cout << "Key: " << entry.first << endl;
-        cout << "Area: " << entry.second.area << endl;
-        cout << "Perimeter: " << entry.second.perimeter << endl;
-        cout << "Coordinates: ";
-        for (const auto& coord : entry.second.coords) {
-            cout << "(" << coord.first << ", " << coord.second << ") ";
-        }
-        cout << endl << endl;
         sum += entry.second.area * entry.second.perimeter;
     }
 
