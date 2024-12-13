@@ -83,6 +83,6 @@ int main(){
         }
     }
     
-    cout << "Part two answer: " << all_antinodes.size();
+    cout << "Part two answer: " << all_antinodes.size() << endl;
     return 0;
 }
