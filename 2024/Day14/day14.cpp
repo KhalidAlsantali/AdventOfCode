@@ -11,6 +11,7 @@
 #include <stack>
 #include <regex>
 #include <cmath>
+#include "BitmapPlusPlus.hpp"
 
 // I made 10k bitmaps to manually look for the shape of the tree then automated solving the solution based on its shape. I just look for 10 robots in a row.
 
@@ -45,77 +46,24 @@ int calculateSafetyFactor(vector<vector<int>>& map, int rows, int cols){
     return safety_factor;
 }
 
-
-// None of the image writing code is mine.
-// Bitmap header structures
-#pragma pack(push, 1)
-struct BITMAPFILEHEADER {
-    uint16_t bfType = 0x4D42; // 'BM' in little-endian
-    uint32_t bfSize;
-    uint16_t bfReserved1 = 0;
-    uint16_t bfReserved2 = 0;
-    uint32_t bfOffBits;
-};
-
-struct BITMAPINFOHEADER {
-    uint32_t biSize = 40;
-    int32_t biWidth;
-    int32_t biHeight;
-    uint16_t biPlanes = 1;
-    uint16_t biBitCount = 24; // 24 bits for RGB
-    uint32_t biCompression = 0;
-    uint32_t biSizeImage;
-    int32_t biXPelsPerMeter = 0;
-    int32_t biYPelsPerMeter = 0;
-    uint32_t biClrUsed = 0;
-    uint32_t biClrImportant = 0;
-};
-#pragma pack(pop)
-
 void writeBitmapToFile(const vector<vector<int>>& map, const string& filename) {
-    int rows = map.size();
-    int cols = map[0].size();
-
-    // Bitmap file and info headers
-    BITMAPFILEHEADER fileHeader;
-    BITMAPINFOHEADER infoHeader;
-    infoHeader.biWidth = cols;
-    infoHeader.biHeight = rows;
-    infoHeader.biSizeImage = ((cols * 3 + 3) & ~3) * rows; // Each row is padded to a multiple of 4 bytes
-    fileHeader.bfSize = 54 + infoHeader.biSizeImage; // 54 bytes for headers
-
-    fileHeader.bfOffBits = 54; // Headers are 54 bytes long
-
-    ofstream outFile(filename, ios::binary);
-    if (!outFile) {
-        cerr << "Error opening file " << filename << " for writing!" << endl;
-        return;
-    }
-
-    // Write the headers
-    outFile.write(reinterpret_cast<char*>(&fileHeader), sizeof(fileHeader));
-    outFile.write(reinterpret_cast<char*>(&infoHeader), sizeof(infoHeader));
-
-    // Write the pixel data
-    for (int i = rows - 1; i >= 0; --i) {  // BMP format starts from the bottom row
-        for (int j = 0; j < cols; ++j) {
-            int pixelValue = map[i][j];
-            // Pure black for 0, pure white for positive values
-            uint8_t pixelColor = (pixelValue > 0) ? 255 : 0;  // 255 for white, 0 for black
-
-            // Write the pixel in BGR format (BMP uses BGR instead of RGB)
-            outFile.put(pixelColor);    // Blue
-            outFile.put(pixelColor);    // Green
-            outFile.put(pixelColor);    // Red
-        }
-
-        // Pad the row if necessary (each row must be a multiple of 4 bytes)
-        for (int padding = 0; padding < (4 - (cols * 3) % 4) % 4; ++padding) {
-            outFile.put(0); // Padding byte
+    bmp::Bitmap image(map[0].size(), map.size());
+    for(int i = 0; i < map.size(); i++){
+        for(int j = 0; j < map[i].size(); j++){
+            bmp::Pixel pixel;
+            if(map[i][j] > 0){
+                pixel.r = 255;
+                pixel.g = 255;
+                pixel.b = 255;
+            } else {
+                pixel.r = 0;
+                pixel.g = 0;
+                pixel.b = 0;
+            }
+            image.set(j, i, pixel);
         }
     }
-
-    outFile.close();
+    image.save(filename);
 }
 
 int main(){
