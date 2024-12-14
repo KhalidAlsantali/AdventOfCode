@@ -149,7 +149,7 @@ int main(){
     // basically while(true) but i needed the index.
     for(int i = 0; i < INT_MAX; i++){
         if(tree_found){
-            string filename = "output/map_iteration_" + to_string(i) + ".bmp";
+            string filename = "output/SOLUTION01_map_iteration_" + to_string(i) + ".bmp";
             writeBitmapToFile(map, filename);
             break;
         }
@@ -192,8 +192,9 @@ int main(){
             if(tree_found){
                 break;
             }
+            string filename = "output/map_iteration_" + to_string(i) + ".bmp";
+            writeBitmapToFile(map, filename);
         }
-        
     }
 
     cout << "Part one answer: " << safety_factor << endl;
