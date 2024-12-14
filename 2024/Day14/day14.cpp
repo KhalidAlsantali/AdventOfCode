@@ -11,9 +11,17 @@
 #include <stack>
 #include <regex>
 #include <cmath>
-#include "BitmapPlusPlus.hpp"
 
-// I made 10k bitmaps to manually look for the shape of the tree then automated solving the solution based on its shape. I just look for 10 robots in a row.
+// Attempt to include BitmapPlusPlus.hpp if available
+#ifdef __has_include
+    #if __has_include("BitmapPlusPlus.hpp")
+        #define ENABLE_BITMAP
+    #endif
+#endif
+
+#ifdef ENABLE_BITMAP
+#include "BitmapPlusPlus.hpp"
+#endif
 
 using namespace std;
 
@@ -46,6 +54,7 @@ int calculateSafetyFactor(vector<vector<int>>& map, int rows, int cols){
     return safety_factor;
 }
 
+#ifdef ENABLE_BITMAP
 void writeBitmapToFile(const vector<vector<int>>& map, const string& filename) {
     bmp::Bitmap image(map[0].size(), map.size());
     for(int i = 0; i < map.size(); i++){
@@ -65,6 +74,7 @@ void writeBitmapToFile(const vector<vector<int>>& map, const string& filename) {
     }
     image.save(filename);
 }
+#endif
 
 int main(){
     string input_filename = "input.txt";
@@ -119,13 +129,15 @@ int main(){
             safety_factor = calculateSafetyFactor(map, rows, cols);
         }
         safety_factors.push_back(calculateSafetyFactor(map, rows, cols));
+
+#ifdef ENABLE_BITMAP
         string filename = "output/map_iteration_" + to_string(i) + ".bmp";
         writeBitmapToFile(map, filename);
+#endif
     }
 
     auto minElement = min_element(safety_factors.begin(), safety_factors.end());
     tree_location = distance(safety_factors.begin(), minElement) + 1;
-
 
     cout << "Part one answer: " << safety_factor << endl;
     cout << "Part two answer: " << tree_location << endl;
