@@ -57,8 +57,8 @@ int calculateSafetyFactor(vector<vector<int>>& map, int rows, int cols){
 #ifdef ENABLE_BITMAP
 void writeBitmapToFile(const vector<vector<int>>& map, const string& filename) {
     bmp::Bitmap image(map[0].size(), map.size());
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[i].size(); j++){
+    for(int i = 0; static_cast<size_t>(i) < map.size(); i++){
+        for(int j = 0; static_cast<size_t>(j) < map[i].size(); j++){
             bmp::Pixel pixel;
             if(map[i][j] > 0){
                 pixel.r = 255;
