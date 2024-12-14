@@ -10,6 +10,7 @@
 #include <utility>
 #include <stack>
 #include <regex>
+#include <cmath>
 
 // I made 10k bitmaps to manually look for the shape of the tree then automated solving the solution based on its shape. I just look for 10 robots in a row.
 
@@ -19,7 +20,7 @@ int mod(int a, int b) {
     return ((a % b) + b) % b;
 }
 
-int part1sol(vector<vector<int>>& map, int rows, int cols){
+int calculateSafetyFactor(vector<vector<int>>& map, int rows, int cols){
     int q1_sum = 0, q2_sum = 0, q3_sum = 0, q4_sum = 0;
     int i_mid = (rows - 1) / 2;
     int j_mid = (cols - 1) / 2;
@@ -117,7 +118,6 @@ void writeBitmapToFile(const vector<vector<int>>& map, const string& filename) {
     outFile.close();
 }
 
-
 int main(){
     string input_filename = "input.txt";
     ifstream inputFile(input_filename);
@@ -146,14 +146,9 @@ int main(){
     for(const auto& robot : robots){
         map[robot[1]][robot[0]]++;
     }
-    // basically while(true) but i needed the index.
-    for(int i = 0; i < INT_MAX; i++){
-        if(tree_found){
-            string filename = "output/SOLUTION01_map_iteration_" + to_string(i) + ".bmp";
-            writeBitmapToFile(map, filename);
-            break;
-        }
-        
+    vector<double> safety_factors;
+    // Assuming the tree is in the first 10k seconds...
+    for(int i = 0; i < 10000; i++){
         for(auto& robot : robots){
             if(tree_found){
                 break;
@@ -173,29 +168,16 @@ int main(){
         }
 
         if(i == 99){
-            safety_factor = part1sol(map, rows, cols);
+            safety_factor = calculateSafetyFactor(map, rows, cols);
         }
-        for(int k = 0; static_cast<size_t>(k) < map.size(); k++){
-            int count = 0;
-            for(int m = 0; static_cast<size_t>(m) < map[k].size(); m++){
-                if(map[k][m] > 0){
-                    count++;
-                } else {
-                    count = 0;
-                }
-                if(count > 10){
-                    tree_found = true;
-                    tree_location = i + 1;
-                    break;
-                }
-            }
-            if(tree_found){
-                break;
-            }
-            string filename = "output/map_iteration_" + to_string(i) + ".bmp";
-            writeBitmapToFile(map, filename);
-        }
+        safety_factors.push_back(calculateSafetyFactor(map, rows, cols));
+        string filename = "output/map_iteration_" + to_string(i) + ".bmp";
+        writeBitmapToFile(map, filename);
     }
+
+    auto minElement = min_element(safety_factors.begin(), safety_factors.end());
+    tree_location = distance(safety_factors.begin(), minElement) + 1;
+
 
     cout << "Part one answer: " << safety_factor << endl;
     cout << "Part two answer: " << tree_location << endl;
