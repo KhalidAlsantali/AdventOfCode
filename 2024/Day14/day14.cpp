@@ -149,8 +149,11 @@ int main(){
     // basically while(true) but i needed the index.
     for(int i = 0; i < INT_MAX; i++){
         if(tree_found){
+            string filename = "output/map_iteration_" + to_string(i) + ".bmp";
+            writeBitmapToFile(map, filename);
             break;
         }
+        
         for(auto& robot : robots){
             if(tree_found){
                 break;
@@ -169,9 +172,6 @@ int main(){
             map[new_i][new_j]++;
         }
 
-        string filename = "output/map_iteration_" + to_string(i) + ".bmp";
-
-        writeBitmapToFile(map, filename);
         if(i == 99){
             safety_factor = part1sol(map, rows, cols);
         }
