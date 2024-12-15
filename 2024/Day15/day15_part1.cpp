@@ -108,7 +108,7 @@ int main(){
 
     int sum = 0;
     for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map.size(); j++){
+        for(int j = 0; j < map[0].size(); j++){
             if(map[i][j] == 'O'){
                 sum += (i * 100) + j;
             }
