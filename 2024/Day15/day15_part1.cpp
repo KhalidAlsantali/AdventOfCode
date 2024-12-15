@@ -102,8 +102,6 @@ int main(){
         if(c == '<'){
             moveObject(map, robot_pos, dirs[3], map[robot_pos.first][robot_pos.second]);
         }
-        // printMap(map);
-        // cout << endl << endl;
     }
 
     int sum = 0;
@@ -115,9 +113,7 @@ int main(){
         }
     }
 
-    cout << sum << endl;
-
-    
-
+    cout << "Part one answer: " << sum << endl;
+    return 0;
 }
     

@@ -162,18 +162,17 @@ int main(){
     }
 
     for(char c : moves){
-        bool moved = false;
         if(c == '^'){
-            moved = moveObject(map, robot_pos, dirs[0], map[robot_pos.first][robot_pos.second]);
+            moveObject(map, robot_pos, dirs[0], map[robot_pos.first][robot_pos.second]);
         }
         if(c == '>'){
-            moved = moveObject(map, robot_pos, dirs[1], map[robot_pos.first][robot_pos.second]);
+            moveObject(map, robot_pos, dirs[1], map[robot_pos.first][robot_pos.second]);
         }
         if(c == 'v'){
-            moved = moveObject(map, robot_pos, dirs[2], map[robot_pos.first][robot_pos.second]);
+            moveObject(map, robot_pos, dirs[2], map[robot_pos.first][robot_pos.second]);
         }
         if(c == '<'){
-            moved = moveObject(map, robot_pos, dirs[3], map[robot_pos.first][robot_pos.second]);
+            moveObject(map, robot_pos, dirs[3], map[robot_pos.first][robot_pos.second]);
         }
     }
 
@@ -185,6 +184,7 @@ int main(){
             }
         }
     }
-    cout << sum << endl;
-   
+
+    cout << "Part two answer: " << sum << endl;
+    return 0;
 }
