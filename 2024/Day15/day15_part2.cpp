@@ -21,65 +21,82 @@ void printMap(vector<vector<char>>& map){
     }
 }
 
-bool checkMoveHorizontal(vector<vector<char>>& map, int dir, int r, int c) {
-    if(c + dir < 0 || c + dir >= map[0].size()) return false;
-    
-    char next = map[r][c + dir];
-    switch(next) {
-        case '#': return false;
-        case '.': return true;
-        case '[':
-        case ']': return checkMoveHorizontal(map, dir, r, c + dir);
+bool checkMoveHorizontal(vector<vector<char>>& map, int dir, pair<int, int> pos) {
+    if(pos.second + dir < 0 || pos.second + dir >= map[0].size()) {
+        return false;
     }
+   
+    char next = map[pos.first][pos.second + dir];
+    
+    if(next == '#') {
+        return false;
+    }
+    if(next == '.') {
+        return true;
+    }
+    if(next == '[' || next == ']') {
+        return checkMoveHorizontal(map, dir, {pos.first, pos.second + dir});
+    }
+    
     return false;
 }
 
-bool checkMoveVertical(vector<vector<char>>& map, int dir, int r, int c) {
-    if(r + dir < 0 || r + dir >= map.size()) return false;
-    
-    char next = map[r + dir][c];
-    switch(next) {
-        case '#': return false;
-        case '.': return true;
-        case '[': return checkMoveVertical(map, dir, r + dir, c) && 
-                        checkMoveVertical(map, dir, r + dir, c + 1);
-        case ']': return checkMoveVertical(map, dir, r + dir, c) && 
-                        checkMoveVertical(map, dir, r + dir, c - 1);
+bool checkMoveVertical(vector<vector<char>>& map, int dir, pair<int, int> pos) {
+    if(pos.first + dir < 0 || pos.first + dir >= map.size()) {
+        return false;
     }
+   
+    char next = map[pos.first + dir][pos.second];
+    
+    if(next == '#') {
+        return false;
+    }
+    if(next == '.') {
+        return true;
+    }
+    if(next == '[') {
+        return checkMoveVertical(map, dir, {pos.first + dir, pos.second}) &&
+               checkMoveVertical(map, dir, {pos.first + dir, pos.second + 1});
+    }
+    if(next == ']') {
+        return checkMoveVertical(map, dir, {pos.first + dir, pos.second}) &&
+               checkMoveVertical(map, dir, {pos.first + dir, pos.second - 1});
+    }
+    
     return false;
 }
 
-void moveObjectHorizontal(vector<vector<char>>& map, int dir, int r, int c) {
-    char temp = map[r][c];
+void moveObjectHorizontal(vector<vector<char>>& map, int dir, pair<int, int> pos) {
+    char temp = map[pos.first][pos.second];
     
-    if(map[r][c + dir] != '.') {
-        moveObjectHorizontal(map, dir, r, c + dir);
+    if(map[pos.first][pos.second + dir] != '.') {
+        moveObjectHorizontal(map, dir, {pos.first, pos.second + dir});
     }
-    map[r][c + dir] = temp;
-    map[r][c] = '.';
+    map[pos.first][pos.second + dir] = temp;
+    map[pos.first][pos.second] = '.';
 }
 
-void moveObjectVertical(vector<vector<char>>& map, int dir, int r, int c) {
-    char temp = map[r][c];
+void moveObjectVertical(vector<vector<char>>& map, int dir, pair<int, int> pos) {
+    char temp = map[pos.first][pos.second];
     
-    if(map[r + dir][c] == '[') {
-        moveObjectVertical(map, dir, r + dir, c);
-        moveObjectVertical(map, dir, r + dir, c + 1);
+    if(map[pos.first + dir][pos.second] == '[') {
+        moveObjectVertical(map, dir, {pos.first + dir, pos.second});
+        moveObjectVertical(map, dir, {pos.first + dir, pos.second + 1});
     }
-    else if(map[r + dir][c] == ']') {
-        moveObjectVertical(map, dir, r + dir, c);
-        moveObjectVertical(map, dir, r + dir, c - 1);
+    else if(map[pos.first + dir][pos.second] == ']') {
+        moveObjectVertical(map, dir, {pos.first + dir, pos.second});
+        moveObjectVertical(map, dir, {pos.first + dir, pos.second - 1});
     }
     
-    map[r + dir][c] = temp;
-    map[r][c] = '.';
+    map[pos.first + dir][pos.second] = temp;
+    map[pos.first][pos.second] = '.';
 }
 
 bool moveObject(vector<vector<char>>& map, pair<int, int> pos, pair<int, int> dir, char c) {
     
     if(dir.first == 0) {
-        if(checkMoveHorizontal(map, dir.second, pos.first, pos.second)) {
-            moveObjectHorizontal(map, dir.second, pos.first, pos.second);
+        if(checkMoveHorizontal(map, dir.second, pos)) {
+            moveObjectHorizontal(map, dir.second, pos);
             if(c == '@') {
                 robot_pos = {pos.first, pos.second + dir.second};
             }
@@ -88,8 +105,8 @@ bool moveObject(vector<vector<char>>& map, pair<int, int> pos, pair<int, int> di
     }
 
     else {
-        if(checkMoveVertical(map, dir.first, pos.first, pos.second)) {
-            moveObjectVertical(map, dir.first, pos.first, pos.second);
+        if(checkMoveVertical(map, dir.first, pos)) {
+            moveObjectVertical(map, dir.first, pos);
             if(c == '@') {
                 robot_pos = {pos.first + dir.first, pos.second};
             }
@@ -157,15 +174,6 @@ int main(){
         }
         if(c == '<'){
             moved = moveObject(map, robot_pos, dirs[3], map[robot_pos.first][robot_pos.second]);
-        }
-    
-        for(int i = 0; i < map.size(); i++){
-            for(int j = 0; j < map[0].size(); j++){
-                if(map[i][j] == '@'){
-                    robot_pos = {i, j};
-                    break;
-                }
-            }
         }
     }
 
