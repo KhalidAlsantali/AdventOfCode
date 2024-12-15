@@ -26,7 +26,7 @@ bool moveObject(vector<vector<char>>& map, pair<int, int> pos, pair<int, int> di
     int new_i = pos.first + dir.first;
     int new_j = pos.second + dir.second;
 
-    if(new_i < 0 || new_j < 0 || new_i >= map.size() || new_j >= map[0].size()){
+    if(new_i < 0 || new_j < 0 || static_cast<size_t>(new_i) >= map.size() || static_cast<size_t>(new_j) >= map[0].size()){
         return false;
     }
 
@@ -80,8 +80,8 @@ int main(){
         moves += line;
     }
 
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[0].size(); j++){
+    for(int i = 0; static_cast<size_t>(i) < map.size(); i++){
+        for(int j = 0; static_cast<size_t>(j) < map[0].size(); j++){
             if(map[i][j] == '@'){
                 robot_pos = {i, j};
             }
@@ -105,8 +105,8 @@ int main(){
     }
 
     int sum = 0;
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[0].size(); j++){
+    for(int i = 0; static_cast<size_t>(i) < map.size(); i++){
+        for(int j = 0; static_cast<size_t>(j) < map[0].size(); j++){
             if(map[i][j] == 'O'){
                 sum += (i * 100) + j;
             }

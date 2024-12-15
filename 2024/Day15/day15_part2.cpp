@@ -22,7 +22,7 @@ void printMap(vector<vector<char>>& map){
 }
 
 bool checkMoveHorizontal(vector<vector<char>>& map, int dir, pair<int, int> pos) {
-    if(pos.second + dir < 0 || pos.second + dir >= map[0].size()) {
+    if(pos.second + dir < 0 || static_cast<size_t>(pos.second + dir) >= map[0].size()) {
         return false;
     }
    
@@ -42,7 +42,7 @@ bool checkMoveHorizontal(vector<vector<char>>& map, int dir, pair<int, int> pos)
 }
 
 bool checkMoveVertical(vector<vector<char>>& map, int dir, pair<int, int> pos) {
-    if(pos.first + dir < 0 || pos.first + dir >= map.size()) {
+    if(pos.first + dir < 0 || static_cast<size_t>(pos.first + dir) >= map.size()) {
         return false;
     }
    
@@ -153,8 +153,8 @@ int main(){
         moves += line;
     }
 
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[0].size(); j++){
+    for(int i = 0; static_cast<size_t>(i) < map.size(); i++){
+        for(int j = 0; static_cast<size_t>(j) < map[0].size(); j++){
             if(map[i][j] == '@'){
                 robot_pos = {i, j};
             }
@@ -177,8 +177,8 @@ int main(){
     }
 
     int sum = 0;
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[0].size(); j++){
+    for(int i = 0; static_cast<size_t>(i) < map.size(); i++){
+        for(int j = 0; static_cast<size_t>(j) < map[0].size(); j++){
             if(map[i][j] == '['){
                 sum += (i * 100) + j;
             }
