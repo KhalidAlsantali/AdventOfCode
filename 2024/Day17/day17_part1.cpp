@@ -58,7 +58,7 @@ void out(int operand){ // COMBO - OPCODE 5
     if (!first_output) {
         cout << ",";
     }
-    cout << combo2num(operand) % 8;
+    cout << "OUT: " << combo2num(operand) % 8 << endl;
     first_output = false;
 }
 
@@ -152,6 +152,10 @@ int main() {
             default:
                 break;
         }
+        cout << "OPCODE: " << program[program_counter] << endl;
+        cout << "A: " << register_A << endl;
+        cout << "B: " << register_B << endl;
+        cout << "C: " << register_C << endl;
         if(jumped){
             continue;
         } else {
