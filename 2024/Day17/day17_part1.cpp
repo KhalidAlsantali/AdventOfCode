@@ -58,7 +58,7 @@ void out(int operand){ // COMBO - OPCODE 5
     if (!first_output) {
         cout << ",";
     }
-    cout << "OUT: " << combo2num(operand) % 8 << endl;
+    cout << combo2num(operand) % 8;
     first_output = false;
 }
 
@@ -71,9 +71,10 @@ void cdv(int operand){ // COMBO - OPCODE 7
 }
 
 int main() {
+    cout << "Part one answer: ";
     vector<int> program;
 
-    ifstream input_file("example.txt");
+    ifstream input_file("input.txt");
     if (!input_file) {
         cerr << "Error: Could not open the input_file." << endl;
         return 1;
@@ -112,17 +113,7 @@ int main() {
     }
     input_file.close();
 
-    // cout << "Register A: " << register_A << endl;
-    // cout << "Register B: " << register_B << endl;
-    // cout << "Register C: " << register_C << endl;
-
-    // cout << "Program: ";
-    // for (int value : program) {
-    //     cout << value << " ";
-    // }
-    // cout << endl;
-
-    while(program_counter < program.size()){
+    while(static_cast<size_t>(program_counter) < program.size()){
         jumped = false;
         switch (program[program_counter]){
             case 0:
@@ -152,16 +143,12 @@ int main() {
             default:
                 break;
         }
-        cout << "OPCODE: " << program[program_counter] << endl;
-        cout << "A: " << register_A << endl;
-        cout << "B: " << register_B << endl;
-        cout << "C: " << register_C << endl;
         if(jumped){
             continue;
         } else {
             program_counter = program_counter + 2;
         }
     }
-
+    
     return 0;
 }
