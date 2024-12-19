@@ -6,11 +6,11 @@
 #include <cmath>
 
 using namespace std;
-int register_A = 0, register_B = 0, register_C = 0;
-int program_counter = 0;
+int64_t register_A = 0, register_B = 0, register_C = 0;
+int64_t program_counter = 0;
 bool jumped = false;
 
-int combo2num(int combo_operand){
+int64_t combo2num(int64_t combo_operand){
     switch (combo_operand){
         case 0:
         case 1:
@@ -28,19 +28,19 @@ int combo2num(int combo_operand){
     }
 }
 
-void adv(int operand){ // COMBO - OPCODE 0
+void adv(int64_t operand){ // COMBO - OPCODE 0
     register_A = register_A / pow(2, combo2num(operand));
 }
 
-void bxl(int operand){ // LITERAL - OPCODE 1
+void bxl(int64_t operand){ // LITERAL - OPCODE 1
     register_B = register_B ^ operand;
 }
 
-void bst(int operand){ // COMBO - OPCODE 2
+void bst(int64_t operand){ // COMBO - OPCODE 2
     register_B = combo2num(operand) % 8;
 }
 
-void jnz(int operand){ // LITERAL - OPCODE 3
+void jnz(int64_t operand){ // LITERAL - OPCODE 3
     if(register_A == 0){
         return;
     } else {
@@ -53,7 +53,7 @@ void bxc(){ // NO OPERAND - OPCODE 4
     register_B = register_B ^ register_C;
 }
 
-void out(int operand){ // COMBO - OPCODE 5
+void out(int64_t operand){ // COMBO - OPCODE 5
     static bool first_output = true;
     if (!first_output) {
         cout << ",";
@@ -62,17 +62,17 @@ void out(int operand){ // COMBO - OPCODE 5
     first_output = false;
 }
 
-void bdv(int operand){ // COMBO - OPCODE 6
+void bdv(int64_t operand){ // COMBO - OPCODE 6
     register_B = register_A / pow(2, combo2num(operand));
 }
 
-void cdv(int operand){ // COMBO - OPCODE 7
+void cdv(int64_t operand){ // COMBO - OPCODE 7
     register_C = register_A / pow(2, combo2num(operand));
 }
 
 int main() {
     cout << "Part one answer: ";
-    vector<int> program;
+    vector<int64_t> program;
 
     ifstream input_file("input.txt");
     if (!input_file) {
@@ -83,13 +83,13 @@ int main() {
     string line;
 
     getline(input_file, line);
-    register_A = stoi(line.substr(line.find(":") + 1));
+    register_A = stoll(line.substr(line.find(":") + 1));
 
     getline(input_file, line);
-    register_B = stoi(line.substr(line.find(":") + 1));
+    register_B = stoll(line.substr(line.find(":") + 1));
 
     getline(input_file, line);
-    register_C = stoi(line.substr(line.find(":") + 1));
+    register_C = stoll(line.substr(line.find(":") + 1));
 
     getline(input_file, line);
 
@@ -102,7 +102,7 @@ int main() {
             program_data.erase(program_data.find_last_not_of(" \t") + 1);
 
             istringstream ss(program_data);
-            int num;
+            int64_t num;
             while (ss >> num) {
                 program.push_back(num);
                 if (ss.peek() == ',') {
