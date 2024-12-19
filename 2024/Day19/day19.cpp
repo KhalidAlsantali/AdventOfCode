@@ -74,10 +74,6 @@ int main() {
         }
     }
 
-
     cout << "Part one answer: " << sum;
-
-
-
     return 0;
 }
