@@ -25,7 +25,7 @@ bool isDesignPossible(const string& design) {
         return true;
     }
    
-    for(int len = 1; len <= design.length(); len++) {
+    for(int len = 1; static_cast<size_t>(len) <= design.length(); len++) {
         string prefix = design.substr(0, len);
         if(findPattern(prefix, patterns)) {
             if(isDesignPossible(design.substr(len))) {
@@ -46,7 +46,7 @@ int64_t countWays(const string& design) {
     }
    
     int64_t ways = 0;
-    for(int len = 1; len <= design.length(); len++) {
+    for(int len = 1; static_cast<size_t>(len) <= design.length(); len++) {
         string prefix = design.substr(0, len);
         if(findPattern(prefix, patterns)) {
             ways += countWays(design.substr(len));
