@@ -6,15 +6,18 @@
 #include <set>
 using namespace std;
 
-int64_t prune(int64_t num){
-    return num % 16777216;
+constexpr int64_t MASK = 0xFFFFFF;  // 16777216 - 1
+constexpr int ITERATIONS = 2000;
+
+inline int64_t compute_secret(int64_t secret) {
+    secret = ((secret << 6) ^ secret) & MASK;
+    secret = ((secret >> 5) ^ secret) & MASK;
+    secret = ((secret << 11) ^ secret) & MASK;
+
+    return secret;
 }
 
-int64_t mix(int64_t num1, int64_t num2){
-    return num1 ^ num2;
-}
-
-int main(){
+int main() {
     ifstream inputFile("input.txt");
     vector<int64_t> numbers;
     vector<vector<int64_t>> all_numbers;
@@ -22,57 +25,56 @@ int main(){
     unordered_map<string, int64_t> bananas;
     set<string> seen;
     string line;
-    
-    if(inputFile.is_open()){
-        while (getline(inputFile, line)) {
-            int64_t number = stoll(line);
-            numbers.push_back(number);
-        }
-        inputFile.close();
-    } else{
+        
+    if (!inputFile.is_open()) {
         cerr << "Unable to open file" << endl;
+        return 1;
     }
-
-    for(int64_t num : numbers){
+    
+    while (getline(inputFile, line)) {
+        numbers.push_back(stoll(line));
+    }
+    inputFile.close();
+    
+    all_numbers.reserve(numbers.size());
+    for (int64_t num : numbers) {
+        vector<int64_t> row;
+        row.reserve(ITERATIONS);
         int64_t secret = num;
         int64_t prev = num;
-        vector<int64_t> row;
-        for(int i = 0; i < 2000; i++){
-            // step 1
-            secret = mix(secret * 64, secret);
-            secret = prune(secret);
-            // step 2
-            secret = mix(secret / 32, secret);
-            secret = prune(secret);
-            // step 3
-            secret = mix(secret * 2048, secret);
-            secret = prune(secret);
-            prices[num].push_back(secret%10 - prev%10);
+        
+        for (int i = 0; i < ITERATIONS; i++) {
+            secret = compute_secret(secret);
+            prices[num].push_back(secret % 10 - prev % 10);
             row.push_back(secret);
             prev = secret;
         }
-        all_numbers.push_back(row);
+        all_numbers.push_back(move(row)); 
     }
-
-    for(size_t idx = 0; idx < numbers.size(); idx++){
+    
+    string seq;
+    seq.reserve(16);  // reserve space for 4 numbers and 3 commas
+    
+    for (size_t idx = 0; idx < numbers.size(); idx++) {
         int64_t num = numbers[idx];
         cout << num << endl;
-        for(int i = 3; i < 2000; i++){
-            string seq = to_string(prices[num][i-3]) + "," +
-                        to_string(prices[num][i-2]) + "," +
-                        to_string(prices[num][i-1]) + "," +
-                        to_string(prices[num][i]);
-           
-            if(seen.find(seq) == seen.end()){
-                seen.insert(seq);
-                for(size_t test_idx = 0; test_idx < numbers.size(); test_idx++){
+        
+        for (int i = 3; i < ITERATIONS; i++) {
+            seq = to_string(prices[num][i-3]) + "," +
+                  to_string(prices[num][i-2]) + "," +
+                  to_string(prices[num][i-1]) + "," +
+                  to_string(prices[num][i]);
+            
+            if (seen.insert(seq).second) {
+                for (size_t test_idx = 0; test_idx < numbers.size(); test_idx++) {
                     int64_t test_num = numbers[test_idx];
-                    for(int j = 3; j < 2000; j++){
-                        if(prices[test_num][j-3] == prices[num][i-3] &&
-                           prices[test_num][j-2] == prices[num][i-2] &&
-                           prices[test_num][j-1] == prices[num][i-1] &&
-                           prices[test_num][j] == prices[num][i]){
-
+                    auto& test_prices = prices[test_num];
+                    
+                    for (int j = 3; j < ITERATIONS; j++) {
+                        if (test_prices[j-3] == prices[num][i-3] &&
+                            test_prices[j-2] == prices[num][i-2] &&
+                            test_prices[j-1] == prices[num][i-1] &&
+                            test_prices[j] == prices[num][i]) {
                             bananas[seq] += all_numbers[test_idx][j] % 10;
                             break;
                         }
@@ -81,7 +83,7 @@ int main(){
             }
         }
     }
-
+    
     int64_t maxBananaValue = 0;
     string maxBananaKey;
     for (const auto& pair : bananas) {
@@ -90,7 +92,7 @@ int main(){
             maxBananaKey = pair.first;
         }
     }
-
+    
     cout << "Part two answer: " << maxBananaValue << endl;
     return 0;
 }
