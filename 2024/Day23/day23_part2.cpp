@@ -78,8 +78,6 @@ int main() {
             maxClique = clique;
         }
     }
-
-
     
     cout << "Part two answer: ";
     for (auto it = maxClique.begin(); it != maxClique.end(); ++it) {
