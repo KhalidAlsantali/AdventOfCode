@@ -38,7 +38,7 @@ int main() {
     for (const auto& pair : adj) {
         for (const auto& neighbor : pair.second) {
             vector<string> cycle;
-            for(int i = 0; i < pair.second.size(); i++){
+            for(size_t i = 0; i < pair.second.size(); i++){
                 if(find(adj[neighbor].begin(), adj[neighbor].end(), pair.second[i]) != adj[neighbor].end()){
                     if (pair.first[0] == 't' || neighbor[0] == 't' || pair.second[i][0] == 't') {
                         cycles.push_back({pair.first, neighbor, pair.second[i]});
