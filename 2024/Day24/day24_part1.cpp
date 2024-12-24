@@ -115,6 +115,6 @@ int main() {
         power++;
     }
 
-    cout << "Part two answer: " << decimal;
+    cout << "Part one answer: " << decimal;
     return 0;
 }
