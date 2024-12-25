@@ -17,9 +17,9 @@ void processSchematic(vector<vector<char>>& schematic, vector<vector<int>>& keys
         is_lock = true;
     }
     vector<int> heights;
-    for(int j = 0; j < schematic[0].size(); j++){
+    for(size_t j = 0; j < schematic[0].size(); j++){
         int count = -1;
-        for(int i = 0; i < schematic.size(); i++){
+        for(size_t i = 0; i < schematic.size(); i++){
             if(schematic[i][j] == '#'){
                 count++;
             }
@@ -66,7 +66,7 @@ int main() {
     for(const auto& lock : locks){
         for(const auto& key : keys){
             bool valid = true;
-            for(int i = 0; i < key.size(); i++){
+            for(size_t i = 0; i < key.size(); i++){
                 if(key[i] + lock[i] >= 6){
                     valid = false;
                     break;
