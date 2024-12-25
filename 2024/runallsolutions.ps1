@@ -11,6 +11,7 @@ foreach ($exe in $exeFiles) {
         $output = $null
         $executionTime = Measure-Command {
             $output = & $exe.FullName
+            $null = $output # Stop unused variable warning
         }
         
         # Print the output
