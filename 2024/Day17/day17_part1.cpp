@@ -149,6 +149,6 @@ int main() {
             program_counter = program_counter + 2;
         }
     }
-    
+    cout << endl;
     return 0;
 }
