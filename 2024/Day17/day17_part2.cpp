@@ -171,6 +171,6 @@ int main() {
     }
     auto minElement = min_element(solutions.begin(), solutions.end());
     int64_t min = *minElement;
-    cout << "Part two answer: " << min << endl;;
+    cout << "Part two answer: " << min << endl;
     return 0;
 }
