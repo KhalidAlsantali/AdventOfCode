@@ -10,5 +10,5 @@ Build using ```make``` and run the output files. You can also use ```.\runAllSol
 
 | Year |  Language  | Stars |
 |------|:----------:|-------|
-|2017  |C++         | ⭐01  |
+|2017  |C++         | ⭐04  |
 |2024  |C++         | ⭐50  |
