@@ -1,10 +1,48 @@
-*.txt
-.vscode
+# Development Environment
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build Outputs
 *.exe
+*.dll
+*.so
+*.dylib
+bin/
+build/
+dist/
+Debug/
+Release/
+
+# Images and Graphics
 *.bmp
-BitmapPlusPlus.hpp
-2024/Day24/output.png
-2024/Day24/graph.mmd
-2024/Day24/graph.dot
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+
+# Documentation and Diagrams
+*.txt
+*.mmd
+*.dot
+*.pdf
+*.docx
+*.md
+
+# Project-Specific Files
 Scripts/createDirs.ps1
-2017/template.cpp
+template.cpp
+BitmapPlusPlus.hpp
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
