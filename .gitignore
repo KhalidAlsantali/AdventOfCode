@@ -6,3 +6,5 @@ BitmapPlusPlus.hpp
 2024/Day24/output.png
 2024/Day24/graph.mmd
 2024/Day24/graph.dot
+Scripts/createDirs.ps1
+2017/template.cpp
