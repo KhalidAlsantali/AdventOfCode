@@ -16,5 +16,5 @@ Build using ```make``` and run the output files. You can also use the Powershell
 
 | Year |  Language  | Stars |
 |------|:----------:|-------|
-|2017  |C++         | ⭐04  |
+|2017  |C++         | ⭐12  |
 |2024  |C++         | ⭐50  |
