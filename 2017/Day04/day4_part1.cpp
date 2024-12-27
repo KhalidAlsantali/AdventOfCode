@@ -57,5 +57,6 @@ int main() {
         }
     }
 
-    cout << "Part one answer:" << totalValid << endl;
+    cout << "Part one answer: " << totalValid << endl;
+    return 0;
 }
