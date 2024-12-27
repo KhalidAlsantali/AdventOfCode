@@ -31,6 +31,5 @@ int main() {
     int distance = layer + abs(sideOffset - layer);
 
     std::cout << "Part one answer: " << distance << std::endl;
-
     return 0;
 }
