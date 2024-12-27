@@ -38,13 +38,6 @@ int main() {
         }
         passphrases.push_back(parts);
     }
-
-    for (const auto& passphrase : passphrases) {
-        for (const auto& word : passphrase) {
-            cout << word << " ";
-        }
-        cout << endl;
-    }
     
     int totalValid = 0;
     for(const auto& pp : passphrases){
