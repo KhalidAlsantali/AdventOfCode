@@ -30,7 +30,7 @@ int main() {
 
     int distance = layer + abs(sideOffset - layer);
 
-    std::cout << "Manhattan distance: " << distance << std::endl;
+    std::cout << "Part one answer: " << distance << std::endl;
 
     return 0;
 }
