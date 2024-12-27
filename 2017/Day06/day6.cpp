@@ -49,8 +49,12 @@ int main() {
     }
     unordered_set<vector<int>, VectorHash> seen;
     int cycles = 0;
+    bool cycle_started = false;
+    vector<int> cycle_start;
     while(true){
         if (seen.find(numbers) != seen.end()) {
+            cycle_started = true;
+            cycle_start = numbers;
             break;
         }
         int max_block_index = distance(numbers.begin(), max_element(numbers.begin(), numbers.end()));
@@ -58,7 +62,18 @@ int main() {
         distributeBlocks(numbers, max_block_index);
         ++cycles;
     }
+
+    int loop_cycles = 0;
+    while(true){
+        int max_block_index = distance(numbers.begin(), max_element(numbers.begin(), numbers.end()));
+        distributeBlocks(numbers, max_block_index);
+        ++loop_cycles;
+        if(numbers == cycle_start){
+            break;
+        }
+    }
  
     cout << "Part one answer: " << cycles << endl;
+    cout << "Part two answer: " << loop_cycles << endl;
     return 0;
 }
