@@ -49,11 +49,9 @@ int main() {
     }
     unordered_set<vector<int>, VectorHash> seen;
     int cycles = 0;
-    bool cycle_started = false;
     vector<int> cycle_start;
     while(true){
         if (seen.find(numbers) != seen.end()) {
-            cycle_started = true;
             cycle_start = numbers;
             break;
         }
