@@ -122,11 +122,11 @@ if ($selectedYear -eq "0") {
     Write-Host "`nExecuting solutions for all years..." -ForegroundColor Green
     foreach ($year in $availableYears) {
         Write-Host "`nProcessing year $year..." -ForegroundColor Cyan
-        Execute-Solutions -yearPath "./$year"
+        Invoke-Solutions -yearPath "./$year"
     }
 } elseif ($availableYears -contains $selectedYear) {
     Write-Host "`nExecuting solutions for year $selectedYear..." -ForegroundColor Green
-    Execute-Solutions -yearPath "./$selectedYear"
+    Invoke-Solutions -yearPath "./$selectedYear"
 } else {
     Write-Host "Invalid year selected!" -ForegroundColor Red
     exit 1
