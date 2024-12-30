@@ -22,19 +22,19 @@ int main() {
     for(int i = 0; i < max; i++){
         list.push_back(i);
     }
-    vector<int> values;
+    vector<int> lengths;
     string line;
     while (getline(inputFile, line)) {
         stringstream ss(line);
         string item;
         while (getline(ss, item, ',')) {
-            values.push_back(stoi(item));
+            lengths.push_back(stoi(item));
         }
     }
 
     int skip = 0;
     int index = 0;
-    for(int num : values) {
+    for(int num : lengths) {
         int start_pos = index % list.size();
         size_t needed_length = num;
         vector<int> sublist;
