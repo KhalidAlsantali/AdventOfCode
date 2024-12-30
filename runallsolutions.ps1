@@ -10,7 +10,7 @@ function Show-Usage {
 }
 
 # Function to execute solutions for a specific year or all years
-function Execute-Solutions {
+function Invoke-Solutions {
     param (
         [string]$yearPath
     )
@@ -93,12 +93,12 @@ if ($args.Count -gt 0) {
         Write-Host "`nExecuting solutions for all years..." -ForegroundColor Green
         foreach ($year in $availableYears) {
             Write-Host "`nProcessing year $year..." -ForegroundColor Cyan
-            Execute-Solutions -yearPath "./$year"
+            Invoke-Solutions -yearPath "./$year"
         }
         exit 0
     } elseif ($availableYears -contains $selectedYear) {
         Write-Host "`nExecuting solutions for year $selectedYear..." -ForegroundColor Green
-        Execute-Solutions -yearPath "./$selectedYear"
+        Invoke-Solutions -yearPath "./$selectedYear"
         exit 0
     } else {
         Write-Host "Invalid year: $selectedYear" -ForegroundColor Red
