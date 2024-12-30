@@ -3,7 +3,7 @@ This is a repository of my solutions to the Advent of Code event. An annual even
 
 # How to run
 
-Build using ```make``` and run the output files. You can also use the Powershell script to run all solutions.
+Build using ```make``` for each year and run the output files. You can also use the Powershell script to run all solutions.
 
 ```
 .\runallsolutions.ps1       # Shows menu
