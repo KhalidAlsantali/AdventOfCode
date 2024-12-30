@@ -12,7 +12,7 @@ else
 endif
 
 # Find all day directories and normalize paths
-DAYS := $(subst \,/,$(wildcard day*))
+DAYS := $(subst \,/,$(wildcard [Dd]ay*))
 
 # Find all .cpp files in day directories
 CPP_FILES := $(subst \,/,$(wildcard $(DAYS:=/*.cpp)))
@@ -23,7 +23,11 @@ EXES := $(CPP_FILES:.cpp=.exe)
 # Default target
 all: $(EXES)
 
-# Generic rule for compiling .cpp to .exe
+# Special rule for Day09.exe
+Day09/day9.exe: Day09/day9.cpp
+	$(CXX) $(CXXFLAGS) -o "$@" "$<" -IC:\Boost\boost_1_87_0 -LC:\Boost\boost_1_87_0\stage\lib
+
+# Generic rule for compiling .cpp to .exe (excluding Day09.cpp)
 %.exe: %.cpp
 	$(CXX) $(CXXFLAGS) -o "$@" "$<"
 
