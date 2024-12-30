@@ -15,12 +15,15 @@ function Invoke-Solutions {
         [string]$yearPath
     )
     
+    # Initialize total time for this year
+    $yearTotalTime = 0
+    
     # Recursively find all .exe files from specified path
     $exeFiles = Get-ChildItem -Path $yearPath -Recurse -Filter "*.exe" | Where-Object { $_.Name -notmatch "interactive" }
     
     if ($exeFiles.Count -eq 0) {
         Write-Host "No executable files found in $yearPath" -ForegroundColor Yellow
-        return
+        return 0
     }
     
     # Iterate over each .exe file and execute it
@@ -45,6 +48,9 @@ function Invoke-Solutions {
                 $null = $output # Stop unused variable warning
             }
             
+            # Add to year total
+            $yearTotalTime += $executionTime.TotalMilliseconds
+            
             # Print the output
             if ($output) {
                 Write-Host "Output:" -ForegroundColor Yellow
@@ -66,6 +72,9 @@ function Invoke-Solutions {
         # Add a separator line between executions
         Write-Host "`n$border`n" -ForegroundColor DarkGray
     }
+    
+    # Return the total time for this year
+    return $yearTotalTime
 }
 
 # Get available years from directory structure
@@ -91,14 +100,19 @@ if ($args.Count -gt 0) {
     # Handle command line argument
     if ($selectedYear.ToLower() -eq "all") {
         Write-Host "`nExecuting solutions for all years..." -ForegroundColor Green
+        $totalTimeAllYears = 0
         foreach ($year in $availableYears) {
             Write-Host "`nProcessing year $year..." -ForegroundColor Cyan
-            Invoke-Solutions -yearPath "./$year"
+            $yearTime = Invoke-Solutions -yearPath "./$year"
+            Write-Host ("Total execution time for year {0}: {1:F3} ms" -f $year, $yearTime) -ForegroundColor Magenta
+            $totalTimeAllYears += $yearTime
         }
+        Write-Host ("`nTotal execution time for all years: {0:F3} ms" -f $totalTimeAllYears) -ForegroundColor Magenta
         exit 0
     } elseif ($availableYears -contains $selectedYear) {
         Write-Host "`nExecuting solutions for year $selectedYear..." -ForegroundColor Green
-        Invoke-Solutions -yearPath "./$selectedYear"
+        $yearTime = Invoke-Solutions -yearPath "./$selectedYear"
+        Write-Host ("`nTotal execution time for year {0}: {1:F3} ms" -f $selectedYear, $yearTime) -ForegroundColor Magenta
         exit 0
     } else {
         Write-Host "Invalid year: $selectedYear" -ForegroundColor Red
@@ -120,13 +134,18 @@ $selectedYear = Read-Host "`nEnter the year to execute (0 for all years)"
 # Validate input
 if ($selectedYear -eq "0") {
     Write-Host "`nExecuting solutions for all years..." -ForegroundColor Green
+    $totalTimeAllYears = 0
     foreach ($year in $availableYears) {
         Write-Host "`nProcessing year $year..." -ForegroundColor Cyan
-        Invoke-Solutions -yearPath "./$year"
+        $yearTime = Invoke-Solutions -yearPath "./$year"
+        Write-Host ("Total execution time for year {0}: {1:F3} ms" -f $year, $yearTime) -ForegroundColor Magenta
+        $totalTimeAllYears += $yearTime
     }
+    Write-Host ("`nTotal execution time for all years: {0:F3} ms" -f $totalTimeAllYears) -ForegroundColor Magenta
 } elseif ($availableYears -contains $selectedYear) {
     Write-Host "`nExecuting solutions for year $selectedYear..." -ForegroundColor Green
-    Invoke-Solutions -yearPath "./$selectedYear"
+    $yearTime = Invoke-Solutions -yearPath "./$selectedYear"
+    Write-Host ("`nTotal execution time for year {0}: {1:F3} ms" -f $selectedYear, $yearTime) -ForegroundColor Magenta
 } else {
     Write-Host "Invalid year selected!" -ForegroundColor Red
     exit 1
