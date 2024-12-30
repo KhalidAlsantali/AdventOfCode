@@ -77,6 +77,5 @@ int main() {
     
     cout << "Part one answer: " << countGroups(stream) << endl;
     cout << "Part two answer: " << garbageCount << endl;
-    
     return 0;
 }

@@ -54,13 +54,13 @@ int countValue(const string& stream, int sum = 0, int level = 1) {
     boost::sregex_iterator iter(stream.begin(), stream.end(), pattern);
     boost::sregex_iterator end;
    
-    int totalSum = sum;  // Initialize with current sum
+    int totalSum = sum;
    
     while (iter != end) {
         std::string match = iter->str();
-        match.erase(0, 1); // erase the first character
-        match.erase(match.size() - 1, 1); // erase the last character
-        totalSum = countValue(match, totalSum + level, level + 1);  // Accumulate returned value
+        match.erase(0, 1);
+        match.erase(match.size() - 1, 1);
+        totalSum = countValue(match, totalSum + level, level + 1);
         ++iter;
     }
    
@@ -78,9 +78,8 @@ int main() {
     int garbageCount = 0;
     getline(inputFile, stream);
     removeExclamation(stream);
-    // cout << stream << endl;
     removeGarbage(stream, garbageCount);
-    // cout << stream << endl;
     cout << "Part one answer: " << countValue(stream) << endl;
     cout << "Part two answer: " << garbageCount << endl;
+    return 0;
 }

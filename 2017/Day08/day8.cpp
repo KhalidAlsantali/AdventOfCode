@@ -42,13 +42,7 @@ int main() {
         instructions.push_back(instruction);
     }
 
-    // for (const auto& instruction : instructions) {
-    //     for (const auto& word : instruction) {
-    //         cout << word << " ";
-    //     }
-    //     cout << endl;
-    // }
-    int maxValDuring = INT_MIN;  // Or start with first element's value
+    int maxValDuring = INT_MIN;  
     for(const auto& inst : instructions){
         string reg = inst[0];
         string dir = inst[1];
@@ -70,11 +64,7 @@ int main() {
         }
     }
 
-    // for (const auto& reg : registers) {
-    //     cout << reg.first << " " << reg.second << endl;
-    // }
-
-    int maxVal = INT_MIN;  // Or start with first element's value
+    int maxVal = INT_MIN;
     for (const auto& pair : registers) {
         if (pair.second > maxVal) {
             maxVal = pair.second;
@@ -83,6 +73,5 @@ int main() {
 
     cout << "Part one answer: " << maxVal << endl;
     cout << "Part two answer: " << maxValDuring << endl;
-
-
+    return 0;
 }

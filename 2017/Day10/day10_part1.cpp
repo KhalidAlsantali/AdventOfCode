@@ -56,6 +56,5 @@ int main() {
     }
 
     cout << "Part one answer: " << list[0] * list[1] << endl;
-
-
+    return 0;
 }

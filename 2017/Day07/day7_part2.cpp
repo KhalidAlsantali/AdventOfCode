@@ -97,7 +97,6 @@ int main() {
     unordered_set<string> connected;
     unordered_map<string, vector<string>> graph;
     unordered_map<string, int> values;
-    
 
     string line;
     while (getline(inputFile, line)) {
@@ -121,7 +120,6 @@ int main() {
         }
     }
     
-
     inputFile.clear();
     inputFile.seekg(0);
     while(getline(inputFile, line)) {
@@ -135,7 +133,6 @@ int main() {
             values[nodeName] = stoi(match.str());
         }
     }
-    
 
     string root;
     for (const auto& elem : first) {
@@ -147,17 +144,13 @@ int main() {
 
     cout << "Part one answer: " << root << endl;
     
-
     unordered_map<string, int> totalWeights;
     for (const auto& node : first) {
         totalWeights[node] = calculateTotalWeight(node, graph, values);
     }
     
-
     findUnbalancedNode(graph, values, root, totalWeights);
     
-
     cout << "Part two answer: " << lastUnbalancedWeight << endl;
-    
     return 0;
 }
