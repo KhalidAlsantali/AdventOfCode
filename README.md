@@ -16,5 +16,5 @@ Build using ```make``` for each year and run the output files. You can also use 
 
 | Year |  Language  | Stars |
 |------|:----------:|-------|
-|2017  |C++         | ⭐20  |
+|2017  |C++         | ⭐22  |
 |2024  |C++         | ⭐50  |
