@@ -12,7 +12,7 @@
 using namespace std;
 
 int calcDist(int q, int r){
-    return (abs(q - 0) + abs(q + r - 0 - 0) + abs(r - 0)) / 2;
+    return (abs(q) + abs(q + r) + abs(r)) / 2;
 }
 
 int main() {
@@ -32,12 +32,9 @@ int main() {
     }
 
     unordered_map<string, pair<int, int>> moves = {
-        {"n", {0, -1}},
-        {"s", {0, 1}},
-        {"ne", {1, -1}},
-        {"nw", {-1, 0}},
-        {"se", {1, 0}},
-        {"sw", {-1, 1}}
+        {"n", {0, -1}}, {"s", {0, 1}},
+        {"ne", {1, -1}}, {"nw", {-1, 0}},
+        {"se", {1, 0}}, {"sw", {-1, 1}}
     };
 
     int q = 0, r = 0;
