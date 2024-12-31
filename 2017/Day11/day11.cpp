@@ -56,5 +56,5 @@ int main() {
 
     cout << "Part one answer: " << finalDist << endl;
     cout << "Part two answer: " << maxDist << endl;
-
+    return 0;
 }
