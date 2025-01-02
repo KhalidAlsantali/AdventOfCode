@@ -6,19 +6,19 @@
 #include <sstream>
 #include <cmath>
 #include <algorithm>
-#include <unordered_map>
+#include <map>
 #include <unordered_set>
 
 using namespace std;
 
-bool checkIfCaught(int& packet_layer, unordered_map<int, pair<int, int>>& scanner_positions){
+bool checkIfCaught(int& packet_layer, map<int, pair<int, int>>& scanner_positions){
     if(scanner_positions[packet_layer].first == 0){
         return true;
     }
     return false;
 }
 
-void moveScanners(unordered_map<int, int>& layers, unordered_map<int, pair<int, int>>& scanner_positions){
+void moveScanners(map<int, int>& layers, map<int, pair<int, int>>& scanner_positions){
     for(auto& layer : layers){
         pair<int, int>& scanner = scanner_positions[layer.first];
         int* scanner_dir = &(scanner.second);
@@ -36,8 +36,8 @@ int main() {
         cerr << "Unable to open file input.txt";
         return 1;
     }
-    unordered_map<int, int> layers;
-    unordered_map<int, pair<int, int>> scanner_positions;
+    map<int, int> layers;
+    map<int, pair<int, int>> scanner_positions;
     string line;
     while (getline(inputFile, line)) {
         stringstream ss(line);
@@ -47,13 +47,7 @@ int main() {
         layers[layer] = depth;
     }
 
-    int num_layers = 0;
-    if (!layers.empty()) {
-        num_layers = max_element(layers.begin(), layers.end(), 
-                                 [](const pair<int, int>& a, const pair<int, int>& b) {
-                                     return a.first < b.first;
-                                 })->first;
-    }
+    int num_layers = layers.empty() ? 0 : layers.rbegin()->first;
 
     for(int i = 0; i <= num_layers; i++) {
         scanner_positions[i] = {0, 1};
