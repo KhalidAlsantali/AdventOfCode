@@ -18,7 +18,7 @@ int main() {
         return 1;
     }
 
-    map<int, int> layers;  // depth -> range
+    map<int, int> layers;
     string line;
     while (getline(inputFile, line)) {
         stringstream ss(line);
