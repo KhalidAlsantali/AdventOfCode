@@ -153,9 +153,6 @@ int main() {
             }
         }
     }
-
-
-    
     
     cout << "Part one answer: " << usedSquares << endl;
     cout << "Part two answer: " << region_id << endl;
