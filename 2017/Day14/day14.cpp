@@ -86,28 +86,18 @@ int main() {
         disk.push_back(oneHash(new_key));
     }
 
+    unordered_map<char, string> hexToBin = {
+        {'0', "0000"}, {'1', "0001"}, {'2', "0010"}, {'3', "0011"},
+        {'4', "0100"}, {'5', "0101"}, {'6', "0110"}, {'7', "0111"},
+        {'8', "1000"}, {'9', "1001"}, {'a', "1010"}, {'b', "1011"},
+        {'c', "1100"}, {'d', "1101"}, {'e', "1110"}, {'f', "1111"}
+    };
+
     vector<string> binaryDisk;
     for (const string& hexStr : disk) {
         string binaryStr;
         for (char hexChar : hexStr) {
-            switch (hexChar) {
-                case '0': binaryStr += "0000"; break;
-                case '1': binaryStr += "0001"; break;
-                case '2': binaryStr += "0010"; break;
-                case '3': binaryStr += "0011"; break;
-                case '4': binaryStr += "0100"; break;
-                case '5': binaryStr += "0101"; break;
-                case '6': binaryStr += "0110"; break;
-                case '7': binaryStr += "0111"; break;
-                case '8': binaryStr += "1000"; break;
-                case '9': binaryStr += "1001"; break;
-                case 'a': binaryStr += "1010"; break;
-                case 'b': binaryStr += "1011"; break;
-                case 'c': binaryStr += "1100"; break;
-                case 'd': binaryStr += "1101"; break;
-                case 'e': binaryStr += "1110"; break;
-                case 'f': binaryStr += "1111"; break;
-            }
+            binaryStr += hexToBin[tolower(hexChar)];
         }
         binaryDisk.push_back(binaryStr);
     }
