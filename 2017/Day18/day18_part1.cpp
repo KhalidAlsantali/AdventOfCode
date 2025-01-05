@@ -26,7 +26,7 @@ void snd(string x) {
 }
 
 void set(string x, string y) {
-    char c1;
+    char c1 = '\0';
     if (x.length() == 1 && isalpha(x[0])) {
         c1 = x[0];
     }
@@ -42,7 +42,7 @@ void set(string x, string y) {
 }
 
 void add(string x, string y) {
-    char c1;
+    char c1 = '\0';
     if (x.length() == 1 && isalpha(x[0])) {
         c1 = x[0];
     }
@@ -58,7 +58,7 @@ void add(string x, string y) {
 }
 
 void mul(string x, string y) {
-    char c1;
+    char c1 = '\0';
     if (x.length() == 1 && isalpha(x[0])) {
         c1 = x[0];
     }
@@ -73,7 +73,7 @@ void mul(string x, string y) {
 }
 
 void mod(string x, string y) {
-    char c1;
+    char c1 = '\0';
     if (x.length() == 1 && isalpha(x[0])) {
         c1 = x[0];
     }
@@ -126,7 +126,7 @@ int main() {
     
     program_counter = 0;
     bool should_stop = false;
-    while (program_counter >= 0 && program_counter < instructions.size() && !should_stop) {
+    while (program_counter >= 0 && static_cast<size_t>(program_counter) < instructions.size() && !should_stop) {
         const auto& instruction = instructions[program_counter];
         if (instruction[0] == "snd") {
             snd(instruction[1]);
