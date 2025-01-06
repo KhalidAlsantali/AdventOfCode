@@ -46,7 +46,7 @@ int main() {
     vector<char> letters;
     
     pair<int, int> current;
-    for(int i = 0; i < map[0].size(); i++){
+    for(int i = 0; static_cast<size_t>(i) < map[0].size(); i++){
         if(map[0][i] == '|'){
             current = {0, i};
             break;
@@ -75,8 +75,8 @@ int main() {
                 int turnRow = current.first + dirCoord.first;
                 int turnCol = current.second + dirCoord.second;
                 
-                if(turnRow >= 0 && turnRow < map.size() &&
-                   turnCol >= 0 && turnCol < map[0].size() &&
+                if(turnRow >= 0 && static_cast<size_t>(turnRow) < map.size() &&
+                   turnCol >= 0 && static_cast<size_t>(turnCol) < map[0].size() &&
                    map[turnRow][turnCol] != ' ') {
                     currentDir = newDir;
                     newRow = turnRow;
@@ -87,8 +87,8 @@ int main() {
             }
             if(!foundTurn) break;
         }
-        else if(newRow < 0 || newRow >= map.size() ||
-                newCol < 0 || newCol >= map[0].size() ||
+        else if(newRow < 0 || static_cast<size_t>(newRow) >= map.size() ||
+                newCol < 0 || static_cast<size_t>(newCol) >= map[0].size() ||
                 map[newRow][newCol] == ' ') {
             break;
         }
